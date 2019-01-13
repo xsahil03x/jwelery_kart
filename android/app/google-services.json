@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "974432846051",
+    "firebase_url": "https://jwelerykart.firebaseio.com",
+    "project_id": "jwelerykart",
+    "storage_bucket": "jwelerykart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974432846051:android:1773478b4368a550",
+        "android_client_info": {
+          "package_name": "com.magarex.jwelerykart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974432846051-urkn8rad4jqrcth1hnkcmfvlpje2l4qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoY4upJFDTgMZtr1u6ofXQCGRxQD9VaYs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
