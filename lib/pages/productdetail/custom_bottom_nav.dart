@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/product_detail_bloc.dart';
-import 'package:jwelery_kart/models/product.dart';
 
 class CustomBottomNav extends StatelessWidget {
-  final Product product;
-
-  const CustomBottomNav(this.product);
-
   @override
   Widget build(BuildContext context) {
     final snackBar = SnackBar(content: Text('Successfully Added'));
@@ -26,12 +21,7 @@ class CustomBottomNav extends StatelessWidget {
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(0.0)),
               onPressed: () {
-                productDetailBloc.addItemToCart(
-                    "+918458944882",
-                    product.productId.toString(),
-                    product.productName,
-                    productDetailBloc.getProductSize(),
-                    product.productColor);
+                productDetailBloc.addItemToCart("+918458944882");
                 productDetailBloc.addItemResult.listen((result) {
                   if (result == 'Success') {
                     Scaffold.of(context).showSnackBar(snackBar);

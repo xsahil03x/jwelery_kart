@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:jwelery_kart/bloc/base_bloc.dart';
-import 'package:jwelery_kart/models/product.dart';
-import 'package:jwelery_kart/api/jwelery_kart_api.dart';
+import 'package:jwelery_kart/data/models/product.dart';
+import 'package:jwelery_kart/data/remote/jwelery_kart_api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductDetailBloc extends BaseBloc {
@@ -24,12 +24,13 @@ class ProductDetailBloc extends BaseBloc {
     );
   }
 
-  addItemToCart(String customerContact, String productId, String productName,
-      String productSize, String productColor) {
+  addItemToCart(String customerContact) {
     _addItemResult.sink.addStream(
-      Observable.fromFuture(apiHelper.addItemToCart(customerContact, productId,
-              productName, productSize, productColor))
-          .asBroadcastStream(),
+      Observable.fromFuture(apiHelper.addItemToCart(
+        _product.value,
+        customerContact,
+        _productSize,
+      )).asBroadcastStream(),
     );
   }
 

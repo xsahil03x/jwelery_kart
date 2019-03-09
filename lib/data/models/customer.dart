@@ -1,4 +1,13 @@
 class Customer {
+  static final tblCustomer = "customer";
+  static final dbId = "id";
+  static final dbName = "name";
+  static final dbAddress = "address";
+  static final dbContact = "contact";
+  static final dbPincode = "pincode";
+  static final dbEmail = "email";
+  static final dbCity = "city";
+
   String _customerAddress;
   String _customerContact;
   String _response;

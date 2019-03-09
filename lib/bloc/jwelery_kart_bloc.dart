@@ -1,8 +1,8 @@
 import 'package:jwelery_kart/bloc/base_bloc.dart';
-import 'package:jwelery_kart/models/collection_response.dart';
-import 'package:jwelery_kart/models/offer_product_response.dart';
-import 'package:jwelery_kart/models/product_response.dart';
-import 'package:jwelery_kart/api/jwelery_kart_api.dart';
+import 'package:jwelery_kart/data/models/collection_response.dart';
+import 'package:jwelery_kart/data/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/product_response.dart';
+import 'package:jwelery_kart/data/remote/jwelery_kart_api.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 

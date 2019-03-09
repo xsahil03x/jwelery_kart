@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/jwelery_kart_bloc.dart';
-import 'package:jwelery_kart/models/collection_response.dart';
-import 'package:jwelery_kart/models/offer_product_response.dart';
-import 'package:jwelery_kart/models/product_response.dart';
+import 'package:jwelery_kart/data/models/collection_response.dart';
+import 'package:jwelery_kart/data/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/product_response.dart';
 import 'package:jwelery_kart/pages/fragments/carousel_offers.dart';
 import 'package:jwelery_kart/pages/fragments/collection_card.dart';
 import 'package:jwelery_kart/pages/fragments/item_card.dart';

@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:http/http.dart' show Client;
-import 'package:jwelery_kart/models/cart_response.dart';
-import 'package:jwelery_kart/models/collection_response.dart';
-import 'package:jwelery_kart/models/offer_product_response.dart';
-import 'package:jwelery_kart/models/product.dart';
-import 'package:jwelery_kart/models/product_response.dart';
+import 'package:jwelery_kart/data/models/cart_response.dart';
+import 'package:jwelery_kart/data/models/collection_response.dart';
+import 'package:jwelery_kart/data/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/product.dart';
+import 'package:jwelery_kart/data/models/product_response.dart';
 
 JeweleryKartApi apiHelper = new JeweleryKartApi();
 
@@ -22,7 +21,7 @@ class JeweleryKartApi {
     return _instance;
   }
 
-  JeweleryKartApi._internal() {}
+  JeweleryKartApi._internal();
 
   Future<List<Collection>> getWomenCollections() async {
     List<Collection> collections = [];
@@ -134,21 +133,21 @@ class JeweleryKartApi {
         .then((json) => CartResponse.fromJson(json));
   }
 
-  Future<String> addItemToCart(String customerContact, String productId,
-      String productName, String productSize, String productColor) async {
+  Future<String> addItemToCart(
+      Product product, String customerContact, String productSize) async {
     return await _client
         .get(
           _rootUrl +
               'customer?task=addUpdateToCart&customerContact=' +
               customerContact +
               '&productId=' +
-              productId +
+              product.productId.toString() +
               '&productName=' +
-              productName +
+              product.productName +
               '&productSize=' +
               productSize +
               '&productColor=' +
-              productColor +
+              product.productColor +
               '&productQuantity=1',
         )
         .then((result) => result.body);

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
-import 'package:jwelery_kart/models/cart_response.dart';
+import 'package:jwelery_kart/data/models/cart_response.dart';
 
 class CartItem extends StatelessWidget {
   final Cart cart;

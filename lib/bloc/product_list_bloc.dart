@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:jwelery_kart/bloc/base_bloc.dart';
-import 'package:jwelery_kart/models/product_response.dart';
-import 'package:jwelery_kart/api/jwelery_kart_api.dart';
+import 'package:jwelery_kart/data/models/product_response.dart';
+import 'package:jwelery_kart/data/remote/jwelery_kart_api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductListBloc extends BaseBloc {

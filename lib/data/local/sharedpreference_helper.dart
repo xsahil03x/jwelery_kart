@@ -13,6 +13,12 @@ class SharedPrefsHelper {
 
   final String prefsUserPhone = "USERPHONE";
 
+  final String prefsUserData = "USERDATA";
+
+  set userData(value) => _prefs.setString(prefsUserData, value);
+
+  get userData => _prefs.getString(prefsUserData);
+
   set isLogin(value) => _prefs.setBool(prefsIsLogin, value);
 
   get isLogin => _prefs.getBool(prefsIsLogin) ?? false;

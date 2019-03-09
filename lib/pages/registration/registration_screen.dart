@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/utils/dialog_utils.dart';
-import 'package:jwelery_kart/utils/sharedpreference_helper.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 import 'package:jwelery_kart/utils/snackbar_utils.dart';
 
 class RegistrationScreen extends StatefulWidget {

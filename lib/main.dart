@@ -8,7 +8,7 @@ import 'package:jwelery_kart/pages/onboarding/onboarding_screen.dart';
 import 'package:fluro/fluro.dart';
 import 'package:jwelery_kart/pages/registration/registration_screen.dart';
 import 'package:jwelery_kart/pages/registration/user_info_screen.dart';
-import 'package:jwelery_kart/utils/sharedpreference_helper.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 
 Future main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFFDE4435),
         ),
         onGenerateRoute: Application.router.generator,
-        home: UserInfoScreen(),
+        home: HomeScreen(),
         //home: prefsHelper.isLogin ? HomeScreen() : RegistrationScreen(),
       ),
     );

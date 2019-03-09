@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
-import 'package:jwelery_kart/models/product_response.dart';
+import 'package:jwelery_kart/data/models/product_response.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductBrief product;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jwelery_kart/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/offer_product_response.dart';
 
 class OfferCard extends StatelessWidget {
   final OfferBrief offerBrief;

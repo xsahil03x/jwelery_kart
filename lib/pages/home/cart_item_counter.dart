@@ -3,8 +3,7 @@ import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
-import 'package:jwelery_kart/models/cart_response.dart';
-import 'package:jwelery_kart/api/jwelery_kart_api.dart';
+import 'package:jwelery_kart/data/models/cart_response.dart';
 
 class CartItemCounter extends StatelessWidget {
   final String customerContact = "+918458944882";

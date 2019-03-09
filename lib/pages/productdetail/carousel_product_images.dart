@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:jwelery_kart/models/product.dart';
+import 'package:jwelery_kart/data/models/product.dart';
 
 class CarouselProductImages extends StatelessWidget {
   final Product product;
@@ -13,7 +13,7 @@ class CarouselProductImages extends StatelessWidget {
     return CarouselSlider(
       height: (MediaQuery.of(context).size.height * 2) / 3,
       viewportFraction: 1.0,
-      distortion: false,
+      enlargeCenterPage: true,
       items: product.productImageURLs.map((image) {
         return Container(
           child: CachedNetworkImage(

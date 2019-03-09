@@ -3,13 +3,9 @@ import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
-import 'package:jwelery_kart/models/cart_response.dart';
+import 'package:jwelery_kart/data/models/cart_response.dart';
 
 class CustomBottomNav extends StatelessWidget {
-//  final Product product;
-//
-//  const CustomBottomNav(this.product);
-
   @override
   Widget build(BuildContext context) {
     final cartListBloc = Provider.of<CartListBloc>(context);
@@ -41,7 +37,8 @@ class CustomBottomNav extends StatelessWidget {
                     } else if (snapshot.hasError) {
                       return Text("Some Error...",
                           style: TextStyle(color: Colors.white));
-                    }
+                    } else
+                      return Container();
                   },
                 ),
               ),

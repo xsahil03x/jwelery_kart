@@ -21,13 +21,20 @@ class RegistrationBloc extends BaseBloc {
 
   void onSubmit() {
     if (formKey.currentState.validate()) {
-      print(
-          "name : ${nameController.text}\naddress : ${addressController.text}\ncity : ${cityController.text}\nzip : ${zipController.text}\nemail : ${emailController.text}");
+      print("name : ${nameController.text}"
+          "\naddress : ${addressController.text}"
+          "\ncity : ${cityController.text}"
+          "\nzip : ${zipController.text}"
+          "\nemail : ${emailController.text}");
     }
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    nameController?.dispose();
+    addressController?.dispose();
+    cityController?.dispose();
+    zipController?.dispose();
+    emailController?.dispose();
   }
 }

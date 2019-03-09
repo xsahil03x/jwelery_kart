@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:jwelery_kart/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/offer_product_response.dart';
 
 class CarouselOffers extends StatelessWidget {
   final List<OfferBrief> carouselOffers;
@@ -11,6 +11,7 @@ class CarouselOffers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
+      enlargeCenterPage: true,
       items: imgList.map((offer) {
         return Container(
           margin: EdgeInsets.all(5.0),
@@ -19,7 +20,7 @@ class CarouselOffers extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: offer,
               fit: BoxFit.cover,
-              width: 1000.0,
+              width: MediaQuery.of(context).size.width,
             ),
           ),
         );

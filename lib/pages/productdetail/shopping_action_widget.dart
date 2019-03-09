@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/product_detail_bloc.dart';
-import 'package:jwelery_kart/models/product.dart';
+import 'package:jwelery_kart/data/models/product.dart';
 
 class ShoppingActionWidget extends StatefulWidget {
   final Product product;
@@ -15,7 +15,6 @@ class ShoppingActionWidget extends StatefulWidget {
 }
 
 class ShoppingActionWidgetState extends State<ShoppingActionWidget> {
-//  String _sizeValue;
   final Product product;
 
   ShoppingActionWidgetState(this.product);

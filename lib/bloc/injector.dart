@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jwelery_kart/api/jwelery_kart_api.dart';
+import 'package:jwelery_kart/data/remote/jwelery_kart_api.dart';
 
 class Injector extends InheritedWidget {
   final JeweleryKartApi apiHelper = new JeweleryKartApi();
