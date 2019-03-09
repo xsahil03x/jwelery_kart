@@ -13,13 +13,12 @@ class CarouselProductImages extends StatelessWidget {
     return CarouselSlider(
       height: (MediaQuery.of(context).size.height * 2) / 3,
       viewportFraction: 1.0,
-      enlargeCenterPage: true,
       items: product.productImageURLs.map((image) {
         return Container(
           child: CachedNetworkImage(
             imageUrl: image,
             fit: BoxFit.cover,
-            width: 1000.0,
+            height: (MediaQuery.of(context).size.height * 2) / 3,
           ),
         );
       }).toList(),

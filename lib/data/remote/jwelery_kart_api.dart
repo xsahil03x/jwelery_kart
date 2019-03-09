@@ -136,33 +136,42 @@ class JeweleryKartApi {
   Future<String> addItemToCart(
       Product product, String customerContact, String productSize) async {
     return await _client
-        .get(
-          _rootUrl +
-              'customer?task=addUpdateToCart&customerContact=' +
-              customerContact +
-              '&productId=' +
-              product.productId.toString() +
-              '&productName=' +
-              product.productName +
-              '&productSize=' +
-              productSize +
-              '&productColor=' +
-              product.productColor +
-              '&productQuantity=1',
-        )
+        .get(_rootUrl +
+            'customer?task=addUpdateToCart&customerContact=' +
+            customerContact +
+            '&productId=' +
+            product.productId.toString() +
+            '&productName=' +
+            product.productName +
+            '&productSize=' +
+            productSize +
+            '&productColor=' +
+            product.productColor +
+            '&productQuantity=1')
         .then((result) => result.body);
   }
 
   Future<String> removeItemFromCart(
       String customerContact, String productId) async {
     return await _client
-        .get(
-          _rootUrl +
-              'customer?task=deleteFromCart&customerContact=' +
-              customerContact +
-              '&productId=' +
-              productId,
-        )
+        .get(_rootUrl +
+            'customer?task=deleteFromCart&customerContact=' +
+            customerContact +
+            '&productId=' +
+            productId)
         .then((result) => result.body);
+  }
+
+  Future<List<ProductBrief>> searchProduct(String searchQuery) async {
+    List<ProductBrief> products = [];
+    await _client
+        .get(_rootUrl + 'product?task=searchProduct&productName=' + searchQuery)
+        .then((result) => result.body)
+        .then(json.decode)
+        .then((json) => ProductResponse.fromJson(json))
+        .then(
+            (productResponse) => products.addAll(productResponse.productBrief));
+
+    return products;
   }
 }
