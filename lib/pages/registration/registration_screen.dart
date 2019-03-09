@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:jwelery_kart/config/application.dart';
+import 'package:jwelery_kart/config/routes.dart';
+import 'package:jwelery_kart/utils/dialog_utils.dart';
+import 'package:jwelery_kart/utils/sharedpreference_helper.dart';
+import 'package:jwelery_kart/utils/snackbar_utils.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -14,53 +18,79 @@ class RegistrationScreenState extends State<RegistrationScreen> {
   String verificationCode;
   String verificationId;
 
-  final String testSmsCode = '031998';
-  final String testPhoneNumber = '+917987036365';
-
   TextEditingController _numberController = new TextEditingController();
   TextEditingController _otpController = new TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<String> _message = Future<String>.value('');
-  TextEditingController _smsCodeController = TextEditingController();
-
   bool _registerButtonEnabled = false;
   bool _otpButtonEnabled = false;
-
-  String _sessionId;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool showNumberPage = false;
   bool isLoading = false;
 
-  Future<void> _testVerifyPhoneNumber() async {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      key: _scaffoldKey,
+      backgroundColor: Colors.grey[100],
+      body: Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 48.0),
+          child: new Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+//                Image.asset(
+//                  'assets/images/logo.png',
+//                  height: 90.0,
+//                ),
+              new SizedBox(
+                height: 48.0,
+              ),
+              (!showNumberPage ? numberPage() : otpPage()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> onRegisterButtonClick() async {
+    DialogUtils.showProgressBar(context, "Requesting OTP...");
+
+    this.phoneNo = '+91' + _numberController.text;
+
     final PhoneVerificationCompleted verificationCompleted =
         (FirebaseUser user) {
-      _message = Future<String>.value('signInWithPhoneNumber succeeded: $user');
-      print(_message);
+      saveAndNavigate(user);
     };
 
     final PhoneVerificationFailed verificationFailed =
         (AuthException authException) {
-      _message = Future<String>.value(
-          'Phone numbber verification failed. Code: ${authException.code}. Message: ${authException.message}');
-      print(_message);
+      print(
+          'Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}');
+      Navigator.pop(context);
     };
 
     final PhoneCodeSent codeSent =
         (String verificationId, [int forceResendingToken]) async {
       this.verificationId = verificationId;
-      _smsCodeController.text = testSmsCode;
+      Navigator.pop(context);
+      setState(() {
+        showNumberPage = true;
+      });
     };
 
     final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
         (String verificationId) {
       this.verificationId = verificationId;
-      _smsCodeController.text = testSmsCode;
     };
 
+    assert(phoneNo.length == 13);
     await _auth.verifyPhoneNumber(
-        phoneNumber: testPhoneNumber,
+        phoneNumber: phoneNo,
         timeout: const Duration(seconds: 0),
         verificationCompleted: verificationCompleted,
         verificationFailed: verificationFailed,
@@ -68,123 +98,21 @@ class RegistrationScreenState extends State<RegistrationScreen> {
         codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
   }
 
-  Future<String> _testSignInWithPhoneNumber(String smsCode) async {
-    final FirebaseUser user = await _auth.signInWithPhoneNumber(
+  Future<void> onOtpButtonClick() async {
+    DialogUtils.showProgressBar(context, "Please Wait!");
+    String otp = _otpController.text.trim();
+    assert(otp.length == 6);
+    assert(_otpController.text != null);
+    assert(_numberController.text != null);
+
+    final AuthCredential credential = PhoneAuthProvider.getCredential(
       verificationId: verificationId,
-      smsCode: smsCode,
+      smsCode: otp,
     );
-
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
-
-    _smsCodeController.text = '';
-    return 'signInWithPhoneNumber succeeded: $user';
+    await _auth.signInWithCredential(credential).then((user) {
+      saveAndNavigate(user);
+    });
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: Colors.grey[100],
-      body: Container(
-        child: Center(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 48.0),
-            child: new Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-//                Image.asset(
-//                  'assets/images/logo.png',
-//                  height: 90.0,
-//                ),
-                new SizedBox(
-                  height: 48.0,
-                ),
-                (!showNumberPage ? numberPage() : otpPage()),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-//  onRegisterButtonClick() async {
-//    DialogUtils.showProgressBar(context, "Requesting OTP...");
-//
-//    var number = _numberController.text;
-//    assert(number.length == 10);
-//    var response = await apiHelper.getWithoutAuth(ApiEndpoint.sendOtp + number);
-//    if (NetworkUtils.isReqSuccess(tag: "sendOtp", response: response)) {
-//      Navigator.pop(context);
-//
-//      _sessionId = json.decode(response.body)['Details'];
-//      assert(_sessionId != null && _sessionId.isNotEmpty);
-//      setState(() {
-//        showNumberPage = !showNumberPage;
-//      });
-//    } else {
-//      Navigator.pop(context);
-//      SnackbarUtils.show(
-//          _scaffoldKey, "Something went wrong. Please try again");
-////_scaffoldKey.currentState.showSnackBar(snackbar)
-//    }
-//  }
-
-//  onOtpButtonClick() async {
-//    DialogUtils.showProgressBar(context, "Please Wait!");
-//    String otp = _otpController.text.trim();
-//    assert(otp.length == 6);
-//
-//    Map<String, String> _map = new Map();
-//// {
-////   "device_name": "string",
-////   "otp_input": "string",
-////   "phone": "string",
-////   "session_id": "string"
-//// }
-////TODO: remove this hardcode
-//    assert(_sessionId != null);
-//    assert(_otpController.text != null);
-//    assert(_numberController.text != null);
-//
-//    _map.putIfAbsent("device_name", () => "Ayush_phone");
-//    _map.putIfAbsent("otp_input", () => _otpController.text.trim());
-//    _map.putIfAbsent("phone", () => _numberController.text.trim());
-//    _map.putIfAbsent("session_id", () => _sessionId);
-//
-//    print(json.encode(_map));
-//    http.Response response = await apiHelper.postWithoutAuth(
-//        ApiEndpoint.verifyOtp, json.encode(_map));
-//    if (NetworkUtils.isReqSuccess(
-//      tag: "verifyOtp",
-//      response: response,
-//    )) {
-//      print(response.headers);
-//      String token = response.headers['authorization'];
-//      assert(token != null && token.isNotEmpty);
-//      prefsHelper.isLogin = true;
-//      prefsHelper.token = token;
-//      Navigator.pop(context);
-//      await Future.delayed(
-//        Duration(milliseconds: 200),
-//      );
-//
-//      SnackbarUtils.show(_scaffoldKey, "Login Successful");
-//      await Future.delayed(
-//        Duration(milliseconds: 700),
-//      );
-//      Navigator.pushReplacement(
-//          context, new MaterialPageRoute(builder: (context) => new AreaPage()));
-//    } else {
-//      Navigator.pop(context);
-//
-//      SnackbarUtils.show(_scaffoldKey, "Invalid OTP. Please try again");
-////_scaffoldKey.currentState.showSnackBar(snackbar)
-//    }
-//  }
 
   Widget numberPage() {
     return Column(
@@ -238,10 +166,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ),
           textColor: Colors.white.withOpacity(0.9),
-          onPressed: () {
-            _testVerifyPhoneNumber();
-          },
-//          onPressed: _registerButtonEnabled ? onRegisterButtonClick : null,
+          onPressed: _registerButtonEnabled ? onRegisterButtonClick : null,
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
@@ -329,8 +254,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ),
           textColor: Colors.white.withOpacity(0.9),
-          onPressed: () {},
-//          onPressed: _otpButtonEnabled ? onOtpButtonClick : null,
+          onPressed: _otpButtonEnabled ? onOtpButtonClick : null,
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
@@ -345,5 +269,34 @@ class RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ],
     );
+  }
+
+  void saveAndNavigate(FirebaseUser user) async {
+    prefsHelper.isLogin = user ?? true;
+    Navigator.pop(context);
+    await Future.delayed(
+      Duration(milliseconds: 200),
+    );
+    SnackbarUtils.show(_scaffoldKey,
+        user != null ? "Login Successful" : "Login Failed... Try Again");
+    await Future.delayed(
+      Duration(milliseconds: 700),
+    );
+    user != null
+        ? Application.router.navigateTo(context, Routes.main)
+        : setState(() {
+            showNumberPage = true;
+          });
+
+//    prefsHelper.isLogin = true;
+//    Navigator.pop(context);
+//    await Future.delayed(
+//      Duration(milliseconds: 200),
+//    );
+//    SnackbarUtils.show(_scaffoldKey, "Login Successful");
+//    await Future.delayed(
+//      Duration(milliseconds: 700),
+//    );
+//    Application.router.navigateTo(context, Routes.main);
   }
 }

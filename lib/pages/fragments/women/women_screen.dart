@@ -59,12 +59,12 @@ class WomenScreen extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              "Collections",
+                              "Hot Collections",
                               style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 1.2,
                                   color: Colors.blueGrey[900],
-                                  fontSize: 12.0),
+                                  fontSize: 14.0),
                             ),
                           ),
                         ],

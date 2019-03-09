@@ -1,54 +1,49 @@
+import 'dart:async';
+
 import 'package:jwelery_kart/bloc/base_bloc.dart';
 import 'package:jwelery_kart/models/product.dart';
-import 'package:jwelery_kart/utils/jwelery_kart_api.dart';
+import 'package:jwelery_kart/api/jwelery_kart_api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductDetailBloc extends BaseBloc {
-  final JweleryKartApi kartApi;
   final String productId;
 
-  Stream<Product> _product = Stream.empty();
-  Stream<String> _addItemResult = Stream.empty();
-  Stream<String> _removeItemResult = Stream.empty();
+  String _productSize;
 
-  Stream<String> get addItemResult => _addItemResult;
+  BehaviorSubject<Product> _product = BehaviorSubject<Product>();
+  BehaviorSubject<String> _addItemResult = BehaviorSubject<String>();
 
-  Stream<String> get removeItemResult => _removeItemResult;
+  Stream<String> get addItemResult => _addItemResult.stream;
 
-  Stream<Product> get product => _product;
+  Stream<Product> get product => _product.stream;
 
-  ProductDetailBloc(this.kartApi, this.productId) {
-    _product = Observable.defer(
-      () => Observable.fromFuture(kartApi.getProductDetail(productId))
+  ProductDetailBloc(this.productId) {
+    _product.sink.addStream(
+      Observable.fromFuture(apiHelper.getProductDetail(productId))
           .asBroadcastStream(),
-      reusable: true,
     );
   }
 
-  addItemToCart(Map<String, String> addBody) {
-//    Map<String, String> addBody = new Map();
-//    addBody['customerContact'] = 'admin';
-//    addBody['productId'] = cart.productId.toString();
-//    addBody['productName'] = cart.productName;
-//    addBody['productSize'] = cart.productSize;
-//    addBody['productColor'] = cart.productColor;
-//    addBody['productQuantity'] = cart.productQuantity.toString();
-
-    _addItemResult = Observable.defer(
-        () => Observable.fromFuture(kartApi.addItemToCart(addBody))
-            .asBroadcastStream(),
-        reusable: true);
+  addItemToCart(String customerContact, String productId, String productName,
+      String productSize, String productColor) {
+    _addItemResult.sink.addStream(
+      Observable.fromFuture(apiHelper.addItemToCart(customerContact, productId,
+              productName, productSize, productColor))
+          .asBroadcastStream(),
+    );
   }
 
-  removeItemFromCart(Map<String, String> deleteBody) {
-    _removeItemResult = Observable.defer(
-        () => Observable.fromFuture(kartApi.removeItemFromCart(deleteBody))
-            .asBroadcastStream(),
-        reusable: true);
+  void setProductSize(String size) {
+    this._productSize = size;
+  }
+
+  String getProductSize() {
+    return _productSize;
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _product?.close();
+    _addItemResult?.close();
   }
 }

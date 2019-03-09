@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:jwelery_kart/bloc/injector.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/pages/home/home_screen.dart';
 import 'package:jwelery_kart/pages/onboarding/onboarding_screen.dart';
 import 'package:fluro/fluro.dart';
 import 'package:jwelery_kart/pages/registration/registration_screen.dart';
+import 'package:jwelery_kart/pages/registration/user_info_screen.dart';
+import 'package:jwelery_kart/utils/sharedpreference_helper.dart';
 
-void main() => runApp(MyApp());
+Future main() async {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SharedPrefsHelper().initialize();
+
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   MyApp() {
@@ -17,15 +26,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Nunito',
-        accentColor: Colors.orange,
-        primaryColor: const Color(0xFFDE4435),
+    return Injector(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Nunito',
+          accentColor: Colors.orange,
+          primaryColor: const Color(0xFFDE4435),
+        ),
+        onGenerateRoute: Application.router.generator,
+        home: UserInfoScreen(),
+        //home: prefsHelper.isLogin ? HomeScreen() : RegistrationScreen(),
       ),
-      onGenerateRoute: Application.router.generator,
-      home: HomeScreen(),
     );
   }
 }

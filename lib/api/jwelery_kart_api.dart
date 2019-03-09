@@ -8,11 +8,21 @@ import 'package:jwelery_kart/models/offer_product_response.dart';
 import 'package:jwelery_kart/models/product.dart';
 import 'package:jwelery_kart/models/product_response.dart';
 
-class JweleryKartApi {
+JeweleryKartApi apiHelper = new JeweleryKartApi();
+
+class JeweleryKartApi {
   final Client _client = Client();
 
   static const String _rootUrl =
       'http://jewelrykart-env.s4kbz4hmp3.ap-south-1.elasticbeanstalk.com/';
+
+  static final JeweleryKartApi _instance = new JeweleryKartApi._internal();
+
+  factory JeweleryKartApi() {
+    return _instance;
+  }
+
+  JeweleryKartApi._internal() {}
 
   Future<List<Collection>> getWomenCollections() async {
     List<Collection> collections = [];
@@ -116,32 +126,43 @@ class JweleryKartApi {
         .then((json) => Product.fromJson(json));
   }
 
-  Future<List<Cart>> getCartList(String contact) async {
-    List<Cart> carts = [];
-    await _client
+  Future<CartResponse> getCartResponse(String contact) async {
+    return await _client
         .get(_rootUrl + 'customer?task=fetchCart&customerContact=' + contact)
         .then((result) => result.body)
         .then(json.decode)
-        .then((json) => CartResponse.fromJson(json))
-        .then((cartResponse) => carts.addAll(cartResponse.cart));
-
-    return carts;
+        .then((json) => CartResponse.fromJson(json));
   }
 
-  Future<String> addItemToCart(Map<String, String> cart) async {
+  Future<String> addItemToCart(String customerContact, String productId,
+      String productName, String productSize, String productColor) async {
     return await _client
-        .post(
-          _rootUrl + 'customer?task=addUpdateToCart',
-          body: cart,
+        .get(
+          _rootUrl +
+              'customer?task=addUpdateToCart&customerContact=' +
+              customerContact +
+              '&productId=' +
+              productId +
+              '&productName=' +
+              productName +
+              '&productSize=' +
+              productSize +
+              '&productColor=' +
+              productColor +
+              '&productQuantity=1',
         )
         .then((result) => result.body);
   }
 
-  Future<String> removeItemFromCart(Map<String, String> cart) async {
+  Future<String> removeItemFromCart(
+      String customerContact, String productId) async {
     return await _client
-        .post(
-          _rootUrl + 'customer?task=deleteFromCart',
-          body: cart,
+        .get(
+          _rootUrl +
+              'customer?task=deleteFromCart&customerContact=' +
+              customerContact +
+              '&productId=' +
+              productId,
         )
         .then((result) => result.body);
   }

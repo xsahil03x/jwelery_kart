@@ -10,7 +10,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -19,16 +19,15 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  http: ^0.12.0
+  http: ^0.12.0+1
   intro_views_flutter: ^2.4.0
-  rxdart: ^0.19.0
-  cached_network_image: ^0.5.1
-  shared_preferences: ^0.4.3
-  carousel_slider: ^1.0.1
+  rxdart: ^0.21.0
+  cached_network_image: ^0.6.2
+  shared_preferences: ^0.5.1+1
+  carousel_slider: ^1.1.0
   fluro: ^1.4.0
-  firebase_auth: ^0.6.6
-  google_sign_in: ^3.0.4
-  firebase_core: ^0.2.5+1
+  firebase_auth: 0.8.1+4
+  firebase_core: ^0.3.1+1
 
 dev_dependencies:
   flutter_test:
@@ -52,10 +51,10 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
-  - assets/images/ic_discount.png
-  - assets/images/ic_food.png
-  - assets/images/ic_movie.png
-  - assets/images/ic_travel.png
+    - assets/images/ic_discount.png
+    - assets/images/ic_food.png
+    - assets/images/ic_movie.png
+    - assets/images/ic_travel.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -81,14 +80,14 @@ flutter:
   #         weight: 700
 
   fonts:
-  - family: Nunito
-    fonts:
-    - asset: assets/fonts/nunitoSemiBold.ttf
-    - asset: assets/fonts/nunitoBold.ttf
-      weight: 700
-  - family:  MyIcons
-    fonts:
-    - asset: assets/fonts/MyIcons.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunitoSemiBold.ttf
+        - asset: assets/fonts/nunitoBold.ttf
+          weight: 700
+    - family:  MyIcons
+      fonts:
+        - asset: assets/fonts/MyIcons.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages

@@ -1,3 +1,4 @@
+import 'package:jwelery_kart/pages/DummyPage.dart';
 import 'package:jwelery_kart/pages/home/home_screen.dart';
 import 'package:jwelery_kart/pages/productcart/product_cart.dart';
 import 'package:jwelery_kart/pages/productdetail/product_detail_screen.dart';
@@ -5,6 +6,7 @@ import 'package:jwelery_kart/pages/productlist/product_list_screen.dart';
 
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:jwelery_kart/pages/registration/user_info_screen.dart';
 
 var rootHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -35,4 +37,14 @@ var productDetailHandler = new Handler(
 var cartListHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return new ProductKart();
+});
+
+var dummyHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return new DummyPage();
+});
+
+var userDetailHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return new UserInfoScreen();
 });

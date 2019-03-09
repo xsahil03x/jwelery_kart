@@ -4,7 +4,7 @@ import 'package:jwelery_kart/bloc/product_list_bloc.dart';
 import 'package:jwelery_kart/models/product_response.dart';
 import 'package:jwelery_kart/pages/productlist/product_card.dart';
 import 'package:jwelery_kart/utils/dialog_utils.dart';
-import 'package:jwelery_kart/utils/jwelery_kart_api.dart';
+import 'package:jwelery_kart/api/jwelery_kart_api.dart';
 
 class ProductListScreen extends StatelessWidget {
   final String collectionId;
@@ -15,7 +15,7 @@ class ProductListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<ProductListBloc>(
       builder: (_, bloc) =>
-          bloc ?? ProductListBloc(JweleryKartApi(), collectionId),
+          bloc ?? ProductListBloc(collectionId),
       onDispose: (_, bloc) => bloc.dispose(),
       child: RootApp(),
     );

@@ -1,26 +1,27 @@
+import 'dart:async';
+
 import 'package:jwelery_kart/bloc/base_bloc.dart';
 import 'package:jwelery_kart/models/product_response.dart';
-import 'package:jwelery_kart/utils/jwelery_kart_api.dart';
+import 'package:jwelery_kart/api/jwelery_kart_api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductListBloc extends BaseBloc {
-  final JweleryKartApi kartApi;
   final String collectionId;
 
-  Stream<List<ProductBrief>> _products = Stream.empty();
+  BehaviorSubject<List<ProductBrief>> _products =
+      BehaviorSubject<List<ProductBrief>>();
 
-  Stream<List<ProductBrief>> get products => _products;
+  Stream<List<ProductBrief>> get products => _products.stream;
 
-  ProductListBloc(this.kartApi, this.collectionId) {
-    _products = Observable.defer(
-      () => Observable.fromFuture(kartApi.getProductsByCollection(collectionId))
+  ProductListBloc(this.collectionId) {
+    _products.sink.addStream(
+      Observable.fromFuture(apiHelper.getProductsByCollection(collectionId))
           .asBroadcastStream(),
-      reusable: true,
     );
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _products?.close();
   }
 }

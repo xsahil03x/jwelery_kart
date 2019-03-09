@@ -2,70 +2,71 @@ import 'package:jwelery_kart/bloc/base_bloc.dart';
 import 'package:jwelery_kart/models/collection_response.dart';
 import 'package:jwelery_kart/models/offer_product_response.dart';
 import 'package:jwelery_kart/models/product_response.dart';
-import 'package:jwelery_kart/utils/jwelery_kart_api.dart';
+import 'package:jwelery_kart/api/jwelery_kart_api.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 class JweleryKartBloc extends BaseBloc {
-  final JweleryKartApi kartApi;
+  BehaviorSubject<List<Collection>> _womenCollections =
+      BehaviorSubject<List<Collection>>();
+  BehaviorSubject<List<OfferBrief>> _womenOffers =
+      BehaviorSubject<List<OfferBrief>>();
+  BehaviorSubject<List<ProductBrief>> _womenProducts =
+      BehaviorSubject<List<ProductBrief>>();
 
-  Stream<List<Collection>> _womenCollections = Stream.empty();
-  Stream<List<OfferBrief>> _womenOffers = Stream.empty();
-  Stream<List<ProductBrief>> _womenProducts = Stream.empty();
+  Stream<List<Collection>> get womenCollections => _womenCollections.stream;
 
-  Stream<List<Collection>> get womenCollections => _womenCollections;
+  Stream<List<OfferBrief>> get womenOffers => _womenOffers.stream;
 
-  Stream<List<OfferBrief>> get womenOffers => _womenOffers;
+  Stream<List<ProductBrief>> get womenProducts => _womenProducts.stream;
 
-  Stream<List<ProductBrief>> get womenProducts => _womenProducts;
+  BehaviorSubject<List<Collection>> _menCollections =
+      BehaviorSubject<List<Collection>>();
+  BehaviorSubject<List<OfferBrief>> _menOffers =
+      BehaviorSubject<List<OfferBrief>>();
+  BehaviorSubject<List<ProductBrief>> _menProducts =
+      BehaviorSubject<List<ProductBrief>>();
 
-  Stream<List<Collection>> _menCollections = Stream.empty();
-  Stream<List<OfferBrief>> _menOffers = Stream.empty();
-  Stream<List<ProductBrief>> _menProducts = Stream.empty();
+  Stream<List<Collection>> get menCollections => _menCollections.stream;
 
-  Stream<List<Collection>> get menCollections => _menCollections;
+  Stream<List<OfferBrief>> get menOffers => _menOffers.stream;
 
-  Stream<List<OfferBrief>> get menOffers => _menOffers;
+  Stream<List<ProductBrief>> get menProducts => _menProducts.stream;
 
-  Stream<List<ProductBrief>> get menProducts => _menProducts;
-
-  JweleryKartBloc(this.kartApi) {
-    _womenCollections = Observable.defer(
-      () => Observable.fromFuture(kartApi.getWomenCollections())
+  JweleryKartBloc() {
+    _womenCollections.sink.addStream(
+      Observable.fromFuture(apiHelper.getWomenCollections())
           .asBroadcastStream(),
-      reusable: true,
     );
 
-    _womenOffers = Observable.defer(
-      () => Observable.fromFuture(kartApi.getWomenOffers()).asBroadcastStream(),
-      reusable: true,
+    _womenOffers.sink.addStream(
+      Observable.fromFuture(apiHelper.getWomenOffers()).asBroadcastStream(),
     );
 
-    _womenProducts = Observable.defer(
-      () =>
-          Observable.fromFuture(kartApi.getWomenProducts()).asBroadcastStream(),
-      reusable: true,
+    _womenProducts.sink.addStream(
+      Observable.fromFuture(apiHelper.getWomenProducts()).asBroadcastStream(),
     );
 
-    _menCollections = Observable.defer(
-      () => Observable.fromFuture(kartApi.getMenCollections())
-          .asBroadcastStream(),
-      reusable: true,
+    _menCollections.sink.addStream(
+      Observable.fromFuture(apiHelper.getMenCollections()).asBroadcastStream(),
     );
 
-    _menOffers = Observable.defer(
-      () => Observable.fromFuture(kartApi.getMenOffers()).asBroadcastStream(),
-      reusable: true,
+    _menOffers.sink.addStream(
+      Observable.fromFuture(apiHelper.getMenOffers()).asBroadcastStream(),
     );
 
-    _menProducts = Observable.defer(
-      () => Observable.fromFuture(kartApi.getMenProducts()).asBroadcastStream(),
-      reusable: true,
+    _menProducts.sink.addStream(
+      Observable.fromFuture(apiHelper.getMenProducts()).asBroadcastStream(),
     );
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _womenProducts?.close();
+    _womenOffers?.close();
+    _womenCollections?.close();
+    _menProducts?.close();
+    _menOffers?.close();
+    _menCollections?.close();
   }
 }
