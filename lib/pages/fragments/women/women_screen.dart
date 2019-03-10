@@ -13,7 +13,7 @@ import 'package:jwelery_kart/utils/dialog_utils.dart';
 class WomenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final jweleryKartBloc = Provider.of<JweleryKartBloc>(context);
+    final jweleryKartBloc = Provider.of<JeweleryKartBloc>(context);
     return StreamBuilder(
       stream: jweleryKartBloc.womenCollections,
       builder:

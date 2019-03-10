@@ -6,12 +6,13 @@ import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/pages/fragments/men/men_screen.dart';
 import 'package:jwelery_kart/pages/fragments/women/women_screen.dart';
 import 'package:jwelery_kart/pages/home/cart_item_counter.dart';
+import 'package:jwelery_kart/pages/home/search_widget_delegate.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<JweleryKartBloc>(
-      builder: (_, bloc) => bloc ?? JweleryKartBloc(),
+    return BlocProvider<JeweleryKartBloc>(
+      builder: (_, bloc) => bloc ?? JeweleryKartBloc(),
       onDispose: (_, bloc) => bloc.dispose(),
       child: RootApp(),
     );
@@ -46,6 +47,7 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of<JeweleryKartBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Jewelery Kart"),
@@ -55,7 +57,9 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
                 Icons.search,
                 color: Colors.white,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                showSearch(context: context, delegate: JewelerySearch(bloc));
+              }),
           CartItemCounter(),
         ],
         bottom: makeTabBar(),
@@ -105,13 +109,13 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
               ),
             ),
             Divider(),
-//            InkWell(
-//              child: ListTile(
-//                onTap: () {},
-//                title: Text("My Orders"),
-//                leading: Icon(Icons.card_travel),
-//              ),
-//            ),
+            InkWell(
+              child: ListTile(
+                onTap: () {},
+                title: Text("My Orders"),
+                leading: Icon(Icons.card_travel),
+              ),
+            ),
             InkWell(
               child: ListTile(
                 onTap: () {
@@ -125,13 +129,13 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
                 leading: Icon(Icons.shopping_cart),
               ),
             ),
-//            InkWell(
-//              child: ListTile(
-//                onTap: () {},
-//                title: Text("My Account"),
-//                leading: Icon(Icons.account_circle),
-//              ),
-//            ),
+            InkWell(
+              child: ListTile(
+                onTap: () {},
+                title: Text("My Account"),
+                leading: Icon(Icons.account_circle),
+              ),
+            ),
             Divider(),
             InkWell(
               child: ListTile(

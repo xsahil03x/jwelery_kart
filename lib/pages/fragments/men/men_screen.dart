@@ -14,7 +14,7 @@ import 'package:jwelery_kart/utils/dialog_utils.dart';
 class MenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final jweleryKartBloc = Provider.of<JweleryKartBloc>(context);
+    final jweleryKartBloc = Provider.of<JeweleryKartBloc>(context);
     return StreamBuilder(
       stream: jweleryKartBloc.menCollections,
       builder:
@@ -250,7 +250,7 @@ class MenScreen extends StatelessWidget {
   }
 }
 
-Widget makeItemList(JweleryKartBloc bloc) => StreamBuilder(
+Widget makeItemList(JeweleryKartBloc bloc) => StreamBuilder(
     stream: bloc.menOffers,
     builder: (BuildContext context, AsyncSnapshot<List<OfferBrief>> snapshot) {
       if (!snapshot.hasData) {
@@ -346,7 +346,7 @@ Widget ratingStack(double rating) => Positioned(
       ),
     );
 
-Widget makeSlideShow(JweleryKartBloc bloc, List<String> images) => Container(
+Widget makeSlideShow(JeweleryKartBloc bloc, List<String> images) => Container(
       height: 200.0,
       child: Card(
         child: StreamBuilder(

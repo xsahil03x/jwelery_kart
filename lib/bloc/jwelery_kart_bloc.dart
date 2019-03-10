@@ -6,7 +6,7 @@ import 'package:jwelery_kart/data/remote/jwelery_kart_api.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
-class JweleryKartBloc extends BaseBloc {
+class JeweleryKartBloc extends BaseBloc {
   BehaviorSubject<List<Collection>> _womenCollections =
       BehaviorSubject<List<Collection>>();
   BehaviorSubject<List<OfferBrief>> _womenOffers =
@@ -33,7 +33,7 @@ class JweleryKartBloc extends BaseBloc {
 
   Stream<List<ProductBrief>> get menProducts => _menProducts.stream;
 
-  JweleryKartBloc() {
+  JeweleryKartBloc() {
     _womenCollections.sink.addStream(
       Observable.fromFuture(apiHelper.getWomenCollections())
           .asBroadcastStream(),
@@ -58,6 +58,10 @@ class JweleryKartBloc extends BaseBloc {
     _menProducts.sink.addStream(
       Observable.fromFuture(apiHelper.getMenProducts()).asBroadcastStream(),
     );
+  }
+
+  Future<List<ProductBrief>> searchJewelery(String searchQuery) {
+    return apiHelper.searchProduct(searchQuery);
   }
 
   @override
