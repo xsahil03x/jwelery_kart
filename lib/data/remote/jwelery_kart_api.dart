@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' show Client;
 import 'package:jwelery_kart/data/models/cart_response.dart';
 import 'package:jwelery_kart/data/models/collection_response.dart';
+import 'package:jwelery_kart/data/models/customer.dart';
 import 'package:jwelery_kart/data/models/offer_product_response.dart';
 import 'package:jwelery_kart/data/models/product.dart';
 import 'package:jwelery_kart/data/models/product_response.dart';
@@ -173,5 +174,51 @@ class JeweleryKartApi {
             (productResponse) => products.addAll(productResponse.productBrief));
 
     return products;
+  }
+
+  Future<String> registerCustomer(Customer customer) async {
+    return await _client
+        .get(_rootUrl +
+            'customer?task=newCustomer&customerName=' +
+            customer.customerName +
+            '&customerContact=' +
+            customer.customerContact +
+            '&customerAddress=' +
+            customer.customerAddress +
+            '&customerCity=' +
+            customer.customerCity +
+            '&customerPincode=' +
+            customer.customerPincode +
+            '&customerEmail=' +
+            customer.customerEmail)
+        .then((result) => result.body);
+  }
+
+  Future<String> updateCustomer(Customer customer) async {
+    return await _client
+        .get(_rootUrl +
+            'customer?task=updateCustomer&customerName=' +
+            customer.customerName +
+            '&customerContact=' +
+            customer.customerContact +
+            '&customerAddress=' +
+            customer.customerAddress +
+            '&customerCity=' +
+            customer.customerCity +
+            '&customerPincode=' +
+            customer.customerPincode +
+            '&customerEmail=' +
+            customer.customerEmail)
+        .then((result) => result.body);
+  }
+
+  Future<Customer> fetchCustomer(String customerContact) async {
+    return await _client
+        .get(_rootUrl +
+            'customer?task=fetchCustomer&customerContact=' +
+            customerContact)
+        .then((result) => result.body)
+        .then(json.decode)
+        .then((response) => Customer.fromJson(response));
   }
 }

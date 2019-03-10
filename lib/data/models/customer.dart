@@ -8,47 +8,74 @@ class Customer {
   static final dbEmail = "email";
   static final dbCity = "city";
 
-  String _customerAddress;
-  String _customerContact;
   String _response;
+  int _customerId;
+  String _customerName;
+  String _customerContact;
+  String _customerAddress;
+  String _customerCity;
   String _customerPincode;
   String _customerEmail;
-  int _customerId;
-  String _customerCity;
-  String _customerName;
 
   Customer(
-      {String customerAddress,
-      String customerContact,
-      String response,
-      String customerPincode,
-      String customerEmail,
+      {String response,
       int customerId,
+      String customerName,
+      String customerContact,
+      String customerAddress,
       String customerCity,
-      String customerName}) {
-    this._customerAddress = customerAddress;
-    this._customerContact = customerContact;
+      String customerPincode,
+      String customerEmail}) {
     this._response = response;
+    this._customerId = customerId;
+    this._customerName = customerName;
+    this._customerContact = customerContact;
+    this._customerAddress = customerAddress;
+    this._customerCity = customerCity;
     this._customerPincode = customerPincode;
     this._customerEmail = customerEmail;
-    this._customerId = customerId;
-    this._customerCity = customerCity;
-    this._customerName = customerName;
   }
 
-  String get customerAddress => _customerAddress;
+  Customer.fresh(
+      {String customerName,
+      String customerContact,
+      String customerAddress,
+      String customerCity,
+      String customerPincode,
+      String customerEmail}) {
+    this._customerName = customerName;
+    this._customerContact = customerContact;
+    this._customerAddress = customerAddress;
+    this._customerCity = customerCity;
+    this._customerPincode = customerPincode;
+    this._customerEmail = customerEmail;
+  }
 
-  set customerAddress(String customerAddress) =>
-      _customerAddress = customerAddress;
+  String get response => _response;
+
+  set response(String response) => _response = response;
+
+  int get customerId => _customerId;
+
+  set customerId(int customerId) => _customerId = customerId;
+
+  String get customerName => _customerName;
+
+  set customerName(String customerName) => _customerName = customerName;
 
   String get customerContact => _customerContact;
 
   set customerContact(String customerContact) =>
       _customerContact = customerContact;
 
-  String get response => _response;
+  String get customerAddress => _customerAddress;
 
-  set response(String response) => _response = response;
+  set customerAddress(String customerAddress) =>
+      _customerAddress = customerAddress;
+
+  String get customerCity => _customerCity;
+
+  set customerCity(String customerCity) => _customerCity = customerCity;
 
   String get customerPincode => _customerPincode;
 
@@ -59,39 +86,27 @@ class Customer {
 
   set customerEmail(String customerEmail) => _customerEmail = customerEmail;
 
-  int get customerId => _customerId;
-
-  set customerId(int customerId) => _customerId = customerId;
-
-  String get customerCity => _customerCity;
-
-  set customerCity(String customerCity) => _customerCity = customerCity;
-
-  String get customerName => _customerName;
-
-  set customerName(String customerName) => _customerName = customerName;
-
   Customer.fromJson(Map<String, dynamic> json) {
-    _customerAddress = json['customerAddress'];
-    _customerContact = json['customerContact'];
     _response = json['response'];
+    _customerId = json['customerId'];
+    _customerName = json['customerName'];
+    _customerContact = json['customerContact'];
+    _customerAddress = json['customerAddress'];
+    _customerCity = json['customerCity'];
     _customerPincode = json['customerPincode'];
     _customerEmail = json['customerEmail'];
-    _customerId = json['customerId'];
-    _customerCity = json['customerCity'];
-    _customerName = json['customerName'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customerAddress'] = this._customerAddress;
-    data['customerContact'] = this._customerContact;
     data['response'] = this._response;
+    data['customerId'] = this._customerId;
+    data['customerName'] = this._customerName;
+    data['customerContact'] = this._customerContact;
+    data['customerAddress'] = this._customerAddress;
+    data['customerCity'] = this._customerCity;
     data['customerPincode'] = this._customerPincode;
     data['customerEmail'] = this._customerEmail;
-    data['customerId'] = this._customerId;
-    data['customerCity'] = this._customerCity;
-    data['customerName'] = this._customerName;
     return data;
   }
 }
