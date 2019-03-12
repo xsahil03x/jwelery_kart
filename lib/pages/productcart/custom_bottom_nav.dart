@@ -4,6 +4,7 @@ import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/models/cart_response.dart';
+import 'package:jwelery_kart/utils/app_utils.dart';
 
 class CustomBottomNav extends StatelessWidget {
   @override
@@ -50,7 +51,17 @@ class CustomBottomNav extends StatelessWidget {
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(0.0)),
               onPressed: () {
-                Application.router.navigateTo(context, Routes.dummyPage);
+                cartListBloc.cartResponse.listen((result) {
+                  if (result != null) {
+                    Application.router.navigateTo(
+                        context,
+                        Routes.buyNow +
+                            '?productId=' +
+                            AppUtils.generateProductId(result.cart) +
+                            '&orderPrice=' +
+                            result.totalPrice.toString());
+                  }
+                });
               },
               color: Colors.teal,
               child: Center(

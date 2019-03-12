@@ -11,6 +11,7 @@ class CarouselOffers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
+      autoPlayInterval: Duration(seconds: 6),
       enlargeCenterPage: true,
       items: imgList.map((offer) {
         return Container(

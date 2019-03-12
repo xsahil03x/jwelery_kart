@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:jwelery_kart/bloc/base_provider.dart';
+import 'package:jwelery_kart/bloc/buy_now_bloc.dart';
 
-enum SingingCharacter { Online, Cod }
+class BuyNow extends StatelessWidget {
+  final String productId;
+  final String orderPrice;
 
-// In the State of a stateful widget:
-SingingCharacter _character = SingingCharacter.Cod;
+  const BuyNow({this.productId, this.orderPrice});
 
-class BuyNow extends StatefulWidget {
-  @override
-  _BuyNowState createState() => _BuyNowState();
-}
-
-class _BuyNowState extends State<BuyNow> {
   @override
   Widget build(BuildContext context) {
+    return BlocProvider<BuyNowBloc>(
+      builder: (_, bloc) => bloc ?? BuyNowBloc(productId, orderPrice),
+      onDispose: (_, bloc) => bloc.dispose(),
+      child: RootApp(),
+    );
+  }
+}
+
+class RootApp extends StatefulWidget {
+  @override
+  _RootAppState createState() => _RootAppState();
+}
+
+class _RootAppState extends State<RootApp> {
+  @override
+  Widget build(BuildContext context) {
+    final buyNowBloc = Provider.of<BuyNowBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Buy now"),
@@ -22,8 +36,14 @@ class _BuyNowState extends State<BuyNow> {
         child: RaisedButton(
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(0.0)),
-          onPressed: () {
-//          Application.router.navigateTo(context, Routes.dummyPage);
+          onPressed: () async {
+            var response = await buyNowBloc.placeOrder();
+            if (response != 'Fail') {
+              buyNowBloc.mode == PaymentMode.Cod
+                  ? print("Order Successfully Placed\nOrder Id : " + response)
+                  : print("Online payment is not yet implemented");
+            } else
+              print(response);
           },
           color: Colors.teal,
           child: Center(
@@ -44,24 +64,24 @@ class _BuyNowState extends State<BuyNow> {
             ),
           ),
           SizedBox(height: 20.0),
-          RadioListTile<SingingCharacter>(
+          RadioListTile<PaymentMode>(
             title: const Text('Cash on delievery'),
             selected: true,
-            value: SingingCharacter.Cod,
-            groupValue: _character,
-            onChanged: (SingingCharacter value) {
+            value: PaymentMode.Cod,
+            groupValue: buyNowBloc.mode,
+            onChanged: (PaymentMode mode) {
               setState(() {
-                _character = value;
+                buyNowBloc.mode = mode;
               });
             },
           ),
-          RadioListTile<SingingCharacter>(
+          RadioListTile<PaymentMode>(
             title: const Text('Online'),
-            value: SingingCharacter.Online,
-            groupValue: _character,
-            onChanged: (SingingCharacter value) {
+            value: PaymentMode.Online,
+            groupValue: buyNowBloc.mode,
+            onChanged: (PaymentMode mode) {
               setState(() {
-                _character = value;
+                buyNowBloc.mode = mode;
               });
             },
           ),

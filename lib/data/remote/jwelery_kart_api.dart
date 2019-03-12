@@ -5,6 +5,7 @@ import 'package:jwelery_kart/data/models/cart_response.dart';
 import 'package:jwelery_kart/data/models/collection_response.dart';
 import 'package:jwelery_kart/data/models/customer.dart';
 import 'package:jwelery_kart/data/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/paytm_model.dart';
 import 'package:jwelery_kart/data/models/product.dart';
 import 'package:jwelery_kart/data/models/product_response.dart';
 
@@ -220,5 +221,36 @@ class JeweleryKartApi {
         .then((result) => result.body)
         .then(json.decode)
         .then((response) => Customer.fromJson(response));
+  }
+
+  Future<String> generateChecksum(PaytmModel model) async {
+    return await _client
+        .get(_rootUrl +
+            'paymentgateway?task=generateChecksum&orderId=' +
+            model.orderId +
+            '&customerId=' +
+            model.customerId +
+            '&phoneNumber=' +
+            model.phoneNumber +
+            '&customerEmail' +
+            model.customerEmail +
+            '&transactionAmount' +
+            model.transactionAmount)
+        .then((result) => result.body);
+  }
+
+  Future<String> placeOrder(
+    String productId,
+    String orderPrice,
+  ) async {
+    return await _client
+        .get(_rootUrl +
+            'order?task=placeOrder&customerContact=' +
+            '+917987036365' +
+            '&productId=' +
+            productId +
+            '&orderPrice=' +
+            orderPrice)
+        .then((result) => result.body);
   }
 }

@@ -8,7 +8,7 @@ import 'package:rxdart/rxdart.dart';
 class ProductDetailBloc extends BaseBloc {
   final String productId;
 
-  String _productSize;
+  String productSize;
 
   BehaviorSubject<Product> _product = BehaviorSubject<Product>();
   BehaviorSubject<String> _addItemResult = BehaviorSubject<String>();
@@ -29,17 +29,9 @@ class ProductDetailBloc extends BaseBloc {
       Observable.fromFuture(apiHelper.addItemToCart(
         _product.value,
         customerContact,
-        _productSize,
+        productSize,
       )).asBroadcastStream(),
     );
-  }
-
-  void setProductSize(String size) {
-    this._productSize = size;
-  }
-
-  String getProductSize() {
-    return _productSize;
   }
 
   @override

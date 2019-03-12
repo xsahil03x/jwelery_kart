@@ -41,7 +41,12 @@ var cartListHandler = new Handler(
 
 var buyNowHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return new BuyNow();
+  String productId = params["productId"]?.first;
+  String orderPrice = params["orderPrice"]?.first;
+  return new BuyNow(
+    productId: productId,
+    orderPrice: orderPrice,
+  );
 });
 
 var userDetailHandler = new Handler(

@@ -22,7 +22,6 @@ class ShoppingActionWidgetState extends State<ShoppingActionWidget> {
   @override
   Widget build(BuildContext context) {
     final productDetailBloc = Provider.of<ProductDetailBloc>(context);
-    String _sizeValue = productDetailBloc.getProductSize();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -39,11 +38,11 @@ class ShoppingActionWidgetState extends State<ShoppingActionWidget> {
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
-                        selected: _sizeValue == size,
+                        selected: productDetailBloc.productSize == size,
                         onSelected: (selected) {
                           setState(() {
-                            _sizeValue = selected ? size : null;
-                            productDetailBloc.setProductSize(size);
+                            productDetailBloc.productSize =
+                                selected ? size : null;
                           });
                         }),
                   ))
