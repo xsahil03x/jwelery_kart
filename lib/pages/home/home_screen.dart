@@ -55,7 +55,7 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
           IconButton(
               icon: Icon(
                 Icons.search,
-                color: Colors.white,
+                color: Colors.black,
               ),
               onPressed: () {
                 showSearch(context: context, delegate: JewelerySearch(bloc));

@@ -10,7 +10,7 @@ class Routes {
   static String productsList = "/main/productList";
   static String productDetail = "/main/productList/productDetail";
   static String cartList = "/cartList";
-  static String dummyPage = "/dummyPage";
+  static String dummyPage = "/buyNow";
   static String userDetail = "/userDetail";
 
   static void configureRoutes(Router router) {
@@ -28,7 +28,7 @@ class Routes {
     router.define(cartList,
         handler: cartListHandler, transitionType: TransitionType.native);
     router.define(dummyPage,
-        handler: dummyHandler, transitionType: TransitionType.native);
+        handler: buyNowHandler, transitionType: TransitionType.native);
     router.define(userDetail,
         handler: userDetailHandler, transitionType: TransitionType.native);
   }

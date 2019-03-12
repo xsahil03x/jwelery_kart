@@ -4,6 +4,7 @@ import 'package:jwelery_kart/bloc/product_detail_bloc.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/models/product.dart';
+import 'package:jwelery_kart/pages/home/cart_item_counter.dart';
 import 'package:jwelery_kart/pages/productdetail/carousel_product_images.dart';
 import 'package:jwelery_kart/pages/productdetail/custom_bottom_nav.dart';
 import 'package:jwelery_kart/utils/dialog_utils.dart';
@@ -40,18 +41,7 @@ class RootApp extends StatelessWidget {
                   slivers: <Widget>[
                     SliverAppBar(
                       actions: <Widget>[
-                        IconButton(
-                            splashColor: Colors.yellow,
-                            icon: Icon(
-                              Icons.shopping_cart,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Application.router.navigateTo(
-                                context,
-                                Routes.cartList,
-                              );
-                            }),
+                        CartItemCounter(),
                       ],
                       pinned: true,
                       expandedHeight:

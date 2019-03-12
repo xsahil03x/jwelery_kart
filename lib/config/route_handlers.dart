@@ -1,4 +1,4 @@
-import 'package:jwelery_kart/pages/DummyPage.dart';
+import 'package:jwelery_kart/pages/buynow/buy_now.dart';
 import 'package:jwelery_kart/pages/home/home_screen.dart';
 import 'package:jwelery_kart/pages/productcart/product_cart.dart';
 import 'package:jwelery_kart/pages/productdetail/product_detail_screen.dart';
@@ -39,9 +39,9 @@ var cartListHandler = new Handler(
   return new ProductKart();
 });
 
-var dummyHandler = new Handler(
+var buyNowHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return new DummyPage();
+  return new BuyNow();
 });
 
 var userDetailHandler = new Handler(

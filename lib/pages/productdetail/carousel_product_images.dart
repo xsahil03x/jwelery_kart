@@ -22,7 +22,7 @@ class CarouselProductImages extends StatelessWidget {
           ),
         );
       }).toList(),
-      autoPlay: true,
+      autoPlay: false,
     );
   }
 }

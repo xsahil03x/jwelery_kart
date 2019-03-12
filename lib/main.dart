@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Nunito',
-          accentColor: Colors.orange,
-          primaryColor: const Color(0xFFDE4435),
+          accentColor: Colors.black,
+          primaryColor: const Color.fromARGB(255, 238, 247, 250),
         ),
         onGenerateRoute: Application.router.generator,
         home: HomeScreen(),

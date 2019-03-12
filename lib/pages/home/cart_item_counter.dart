@@ -27,7 +27,7 @@ class RootApp extends StatelessWidget {
         IconButton(
             icon: Icon(
               Icons.shopping_cart,
-              color: Colors.white,
+              color: Colors.black,
             ),
             onPressed: () {
               Application.router.navigateTo(
