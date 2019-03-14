@@ -164,6 +164,14 @@ class JeweleryKartApi {
         .then((result) => result.body);
   }
 
+  Future<String> emptyCart() async {
+    return await _client
+        .get(_rootUrl +
+            'customer?task=emptyCart&customerContact=' +
+            '+918458944882')
+        .then((result) => result.body);
+  }
+
   Future<List<ProductBrief>> searchProduct(String searchQuery) async {
     List<ProductBrief> products = [];
     await _client
@@ -225,12 +233,11 @@ class JeweleryKartApi {
 
   Future<String> generateChecksum(PaytmModel model) async {
     return await _client
-        .get(_rootUrl +
-            'paymentgateway?task=generateChecksum&orderId=' +
+        .get('http://jewelrykart.in/generatechecksumforapplication?orderId=' +
             model.orderId +
             '&customerId=' +
             model.customerId +
-            '&phoneNumber=' +
+            '&customerPhone=' +
             model.phoneNumber +
             '&customerEmail' +
             model.customerEmail +
@@ -239,18 +246,23 @@ class JeweleryKartApi {
         .then((result) => result.body);
   }
 
+  //http://jewelrykart.in/generatechecksumforapplication?orderId=30&customerId=33&customerPhone=7987036365&customerEmail=xdsahil@gmail.com&transactionAmount=330
+
   Future<String> placeOrder(
     String productId,
     String orderPrice,
+    String paymentMode,
   ) async {
     return await _client
         .get(_rootUrl +
             'order?task=placeOrder&customerContact=' +
-            '+917987036365' +
+            '+918458944882' +
             '&productId=' +
             productId +
             '&orderPrice=' +
-            orderPrice)
+            orderPrice +
+            '&paymentMode=' +
+            paymentMode)
         .then((result) => result.body);
   }
 }

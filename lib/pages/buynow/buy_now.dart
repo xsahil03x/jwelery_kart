@@ -39,9 +39,15 @@ class _RootAppState extends State<RootApp> {
           onPressed: () async {
             var response = await buyNowBloc.placeOrder();
             if (response != 'Fail') {
-              buyNowBloc.mode == PaymentMode.Cod
-                  ? print("Order Successfully Placed\nOrder Id : " + response)
-                  : print("Online payment is not yet implemented");
+              if (buyNowBloc.mode == PaymentMode.Cod) {
+                print("Order Successfully Placed");
+                var response = await buyNowBloc.emptyCart();
+                response != 'Fail'
+                    ? print('Cart Is Empty')
+                    : print("Oops some error");
+              } else {
+                print("Online payment is not yet implemented");
+              }
             } else
               print(response);
           },
