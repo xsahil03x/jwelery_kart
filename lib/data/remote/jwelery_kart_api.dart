@@ -5,6 +5,7 @@ import 'package:jwelery_kart/data/models/cart_response.dart';
 import 'package:jwelery_kart/data/models/collection_response.dart';
 import 'package:jwelery_kart/data/models/customer.dart';
 import 'package:jwelery_kart/data/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/order_response.dart';
 import 'package:jwelery_kart/data/models/paytm_model.dart';
 import 'package:jwelery_kart/data/models/product.dart';
 import 'package:jwelery_kart/data/models/product_response.dart';
@@ -264,5 +265,26 @@ class JeweleryKartApi {
             '&paymentMode=' +
             paymentMode)
         .then((result) => result.body);
+  }
+
+  Future<List<Orders>> fetchOrders() async {
+    List<Orders> orders = [];
+    await _client
+        .get(_rootUrl +
+            'order?task=fetchOrders&customerContact=' +
+            '+918458944882')
+        .then((result) => result.body)
+        .then(json.decode)
+        .then((json) => OrderResponse.fromJson(json))
+        .then((orderResponse) => orders.addAll(orderResponse.orders));
+    return orders;
+  }
+
+  Future<Orders> fetchIndividualOrder(String orderId) async {
+    return _client
+        .get(_rootUrl + 'order?task=fetchIndividualOrder&orderId=' + orderId)
+        .then((result) => result.body)
+        .then(json.decode)
+        .then((json) => Orders.fromJson(json));
   }
 }
