@@ -6,7 +6,7 @@ import 'package:jwelery_kart/pages/productcart/cart_item.dart';
 import 'package:jwelery_kart/pages/productcart/custom_bottom_nav.dart';
 import 'package:jwelery_kart/utils/dialog_utils.dart';
 
-class ProductKart extends StatelessWidget {
+class ProductCartScreen extends StatelessWidget {
   final String customerContact = "+918458944882";
 
   @override

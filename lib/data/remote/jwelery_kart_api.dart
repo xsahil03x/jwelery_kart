@@ -267,12 +267,12 @@ class JeweleryKartApi {
         .then((result) => result.body);
   }
 
-  Future<List<Orders>> fetchOrders() async {
+  Future<List<Orders>> fetchOrders(String customerContact) async {
     List<Orders> orders = [];
     await _client
         .get(_rootUrl +
             'order?task=fetchOrders&customerContact=' +
-            '+918458944882')
+            customerContact)
         .then((result) => result.body)
         .then(json.decode)
         .then((json) => OrderResponse.fromJson(json))

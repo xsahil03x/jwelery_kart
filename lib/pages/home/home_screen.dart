@@ -111,7 +111,12 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
             Divider(),
             InkWell(
               child: ListTile(
-                onTap: () {},
+                onTap: () {
+                  Application.router.navigateTo(
+                    context,
+                    Routes.myOrders,
+                  );
+                },
                 title: Text("My Orders"),
                 leading: Icon(Icons.card_travel),
               ),
