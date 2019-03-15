@@ -3,15 +3,14 @@ import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 import 'package:jwelery_kart/data/models/cart_response.dart';
 
 class CartItemCounter extends StatelessWidget {
-  final String customerContact = "+918458944882";
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CartListBloc>(
-      builder: (_, bloc) => bloc ?? CartListBloc(customerContact),
+      builder: (_, bloc) => bloc ?? CartListBloc(prefsHelper.userPhone),
       onDispose: (_, bloc) => bloc.dispose(),
       child: RootApp(),
     );

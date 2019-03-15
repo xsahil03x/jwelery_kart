@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/registration_bloc.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 
 class UserInfoScreen extends StatelessWidget {
-  final String customerContact = "+918458944882";
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RegistrationBloc>(
-      builder: (_, bloc) => bloc ?? RegistrationBloc(customerContact),
+      builder: (_, bloc) => bloc ?? RegistrationBloc(prefsHelper.userPhone),
       onDispose: (_, bloc) => bloc.dispose(),
       child: UserDetailForm(),
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/buy_now_bloc.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
+import 'package:jwelery_kart/utils/snackbar_utils.dart';
 
 class BuyNow extends StatelessWidget {
   final String productId;
@@ -24,10 +26,13 @@ class RootApp extends StatefulWidget {
 }
 
 class _RootAppState extends State<RootApp> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final buyNowBloc = Provider.of<BuyNowBloc>(context);
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Buy now"),
       ),
@@ -37,11 +42,13 @@ class _RootAppState extends State<RootApp> {
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(0.0)),
           onPressed: () async {
-            var response = await buyNowBloc.placeOrder();
+            var response = await buyNowBloc.placeOrder(prefsHelper.userPhone);
             if (response != 'Fail') {
               if (buyNowBloc.mode == PaymentMode.Cod) {
                 print("Order Successfully Placed");
-                var response = await buyNowBloc.emptyCart();
+                SnackbarUtils.show(_scaffoldKey, "Order Successfully Placed");
+                var response =
+                    await buyNowBloc.emptyCart(prefsHelper.userPhone);
                 response != 'Fail'
                     ? print('Cart Is Empty')
                     : print("Oops some error");

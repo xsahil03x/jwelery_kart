@@ -24,7 +24,7 @@ class ProductDetailBloc extends BaseBloc {
     );
   }
 
-  addItemToCart(String customerContact) {
+  void addItemToCart(String customerContact) {
     _addItemResult.sink.addStream(
       Observable.fromFuture(apiHelper.addItemToCart(
         _product.value,

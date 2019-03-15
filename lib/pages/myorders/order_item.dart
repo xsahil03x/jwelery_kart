@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jwelery_kart/config/application.dart';
+import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/models/order_response.dart';
+import 'package:jwelery_kart/utils/app_utils.dart';
 
 class OrderItem extends StatelessWidget {
   final Orders order;
@@ -59,7 +62,7 @@ class OrderItem extends StatelessWidget {
                       Text(
                         order.orderStatus,
                         style: TextStyle(
-                          color: getStatusColor(order.orderStatus),
+                          color: AppUtils.getStatusColor(order.orderStatus),
                           fontWeight: FontWeight.w500,
                           fontSize: 18.0,
                         ),
@@ -76,7 +79,13 @@ class OrderItem extends StatelessWidget {
               child: FlatButton(
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(0.0)),
-                onPressed: () {},
+                onPressed: () {
+                  Application.router.navigateTo(
+                      context,
+                      Routes.orderDetail +
+                          '?orderId=' +
+                          order.orderId.toString());
+                },
                 child: Center(
                   child: Text(
                     "VIEW DETAILS",
@@ -90,21 +99,4 @@ class OrderItem extends StatelessWidget {
       ),
     );
   }
-}
-
-Color getStatusColor(String orderStatus) {
-  if (orderStatus == 'Processing')
-    return Colors.blueAccent;
-  else if (orderStatus == 'Confirmed')
-    return Colors.amber;
-  else if (orderStatus == 'Prepared')
-    return Colors.blueGrey;
-  else if (orderStatus == 'Dispatched')
-    return Colors.deepOrange;
-  else if (orderStatus == 'Delivered')
-    return Colors.green;
-  else if (orderStatus == 'Failed')
-    return Colors.red;
-  else
-    return Colors.black;
 }

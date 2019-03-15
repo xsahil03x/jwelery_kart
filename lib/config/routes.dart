@@ -13,6 +13,7 @@ class Routes {
   static String buyNow = "/buyNow";
   static String userDetail = "/userDetail";
   static String myOrders = "/myOrders";
+  static String orderDetail = "/orderDetail";
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
@@ -34,5 +35,7 @@ class Routes {
         handler: userDetailHandler, transitionType: TransitionType.native);
     router.define(myOrders,
         handler: myOrdersHandler, transitionType: TransitionType.native);
+    router.define(orderDetail,
+        handler: orderDetailHandler, transitionType: TransitionType.native);
   }
 }

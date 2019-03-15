@@ -11,13 +11,16 @@ class BuyNowBloc extends BaseBloc {
 
   BuyNowBloc(this._productId, this._orderPrice);
 
-  Future<String> placeOrder() {
-    return apiHelper.placeOrder(_productId, _orderPrice,
-        mode == PaymentMode.Cod ? 'Cash on Delivery' : 'Online');
+  Future<String> placeOrder(String customerContact) {
+    return apiHelper.placeOrder(
+        _productId,
+        _orderPrice,
+        mode == PaymentMode.Cod ? 'Cash on Delivery' : 'Online',
+        customerContact);
   }
 
-  Future<String> emptyCart() {
-    return apiHelper.emptyCart();
+  Future<String> emptyCart(String customerCart) {
+    return apiHelper.emptyCart(customerCart);
   }
 
   @override

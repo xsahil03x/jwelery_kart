@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
         onGenerateRoute: Application.router.generator,
         home: HomeScreen(),
-        //home: prefsHelper.isLogin ? HomeScreen() : RegistrationScreen(),
+//        home: prefsHelper.isLogin ? HomeScreen() : RegistrationScreen(),
       ),
     );
   }

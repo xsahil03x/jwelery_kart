@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 import 'package:jwelery_kart/data/models/cart_response.dart';
 
 class CartItem extends StatelessWidget {
@@ -108,7 +109,7 @@ class CartItem extends StatelessWidget {
                     borderRadius: new BorderRadius.circular(0.0)),
                 onPressed: () {
                   cartListBloc.removeItemFromCart(
-                      "+918458944882", cart.productId.toString());
+                      prefsHelper.userPhone, cart.productId.toString());
                   cartListBloc.removeItemResult.listen((result) {
                     if (result == 'Success') {
                       cartListBloc.fetchCartResponse();

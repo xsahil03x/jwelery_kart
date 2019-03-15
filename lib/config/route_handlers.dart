@@ -1,6 +1,7 @@
 import 'package:jwelery_kart/pages/buynow/buy_now.dart';
 import 'package:jwelery_kart/pages/home/home_screen.dart';
 import 'package:jwelery_kart/pages/myorders/my_orders_screen.dart';
+import 'package:jwelery_kart/pages/orderdetail/order_detail_screen.dart';
 import 'package:jwelery_kart/pages/productcart/product_cart_screen.dart';
 import 'package:jwelery_kart/pages/productdetail/product_detail_screen.dart';
 import 'package:jwelery_kart/pages/productlist/product_list_screen.dart';
@@ -57,5 +58,13 @@ var userDetailHandler = new Handler(
 
 var myOrdersHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new MyOrdersScreen();
-    });
+  return new MyOrdersScreen();
+});
+
+var orderDetailHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  String orderId = params["orderId"]?.first;
+  return new OrderDetailScreen(
+    orderId: orderId,
+  );
+});

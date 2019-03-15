@@ -64,7 +64,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
 
     final PhoneVerificationCompleted verificationCompleted =
         (FirebaseUser user) {
-      saveAndNavigate(user);
+//      saveAndNavigate(user);
     };
 
     final PhoneVerificationFailed verificationFailed =
@@ -109,9 +109,19 @@ class RegistrationScreenState extends State<RegistrationScreen> {
       verificationId: verificationId,
       smsCode: otp,
     );
-    await _auth.signInWithCredential(credential).then((user) {
-      saveAndNavigate(user);
-    });
+    final FirebaseUser user = await _auth.signInWithCredential(credential);
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+    prefsHelper.userPhone = user.phoneNumber;
+    Navigator.pop(context);
+    await Future.delayed(
+      Duration(milliseconds: 200),
+    );
+    SnackbarUtils.show(_scaffoldKey, "Verification Successfull");
+    await Future.delayed(
+      Duration(milliseconds: 700),
+    );
+    Application.router.navigateTo(context, Routes.userDetail);
   }
 
   Widget numberPage() {
@@ -271,32 +281,32 @@ class RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  void saveAndNavigate(FirebaseUser user) async {
-    prefsHelper.isLogin = user ?? true;
-    Navigator.pop(context);
-    await Future.delayed(
-      Duration(milliseconds: 200),
-    );
-    SnackbarUtils.show(_scaffoldKey,
-        user != null ? "Login Successful" : "Login Failed... Try Again");
-    await Future.delayed(
-      Duration(milliseconds: 700),
-    );
-    user != null
-        ? Application.router.navigateTo(context, Routes.main)
-        : setState(() {
-            showNumberPage = true;
-          });
-
-//    prefsHelper.isLogin = true;
+//  void saveAndNavigate(FirebaseUser user) async {
+//    prefsHelper.isLogin = user ?? true;
 //    Navigator.pop(context);
 //    await Future.delayed(
 //      Duration(milliseconds: 200),
 //    );
-//    SnackbarUtils.show(_scaffoldKey, "Login Successful");
+//    SnackbarUtils.show(_scaffoldKey,
+//        user != null ? "Login Successful" : "Login Failed... Try Again");
 //    await Future.delayed(
 //      Duration(milliseconds: 700),
 //    );
-//    Application.router.navigateTo(context, Routes.main);
-  }
+//    user != null
+//        ? Application.router.navigateTo(context, Routes.main)
+//        : setState(() {
+//            showNumberPage = true;
+//          });
+//
+////    prefsHelper.isLogin = true;
+////    Navigator.pop(context);
+////    await Future.delayed(
+////      Duration(milliseconds: 200),
+////    );
+////    SnackbarUtils.show(_scaffoldKey, "Login Successful");
+////    await Future.delayed(
+////      Duration(milliseconds: 700),
+////    );
+////    Application.router.navigateTo(context, Routes.main);
+//  }
 }

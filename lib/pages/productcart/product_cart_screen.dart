@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 import 'package:jwelery_kart/data/models/cart_response.dart';
 import 'package:jwelery_kart/pages/productcart/cart_item.dart';
 import 'package:jwelery_kart/pages/productcart/custom_bottom_nav.dart';
 import 'package:jwelery_kart/utils/dialog_utils.dart';
 
 class ProductCartScreen extends StatelessWidget {
-  final String customerContact = "+918458944882";
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CartListBloc>(
-      builder: (_, bloc) => bloc ?? CartListBloc(customerContact),
+      builder: (_, bloc) => bloc ?? CartListBloc(prefsHelper.userPhone),
       onDispose: (_, bloc) => bloc.dispose(),
       child: RootApp(),
     );

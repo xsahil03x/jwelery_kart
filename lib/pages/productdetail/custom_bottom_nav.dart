@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/product_detail_bloc.dart';
+import 'package:jwelery_kart/config/application.dart';
+import 'package:jwelery_kart/config/routes.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 
 class CustomBottomNav extends StatelessWidget {
   @override
@@ -21,7 +24,7 @@ class CustomBottomNav extends StatelessWidget {
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(0.0)),
               onPressed: () {
-                productDetailBloc.addItemToCart("+918458944882");
+                productDetailBloc.addItemToCart(prefsHelper.userPhone);
                 productDetailBloc.addItemResult.listen((result) {
                   if (result == 'Success') {
                     Scaffold.of(context).showSnackBar(snackBar);
@@ -42,7 +45,12 @@ class CustomBottomNav extends StatelessWidget {
             child: RaisedButton(
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(0.0)),
-              onPressed: () {},
+              onPressed: () {
+                Application.router.navigateTo(
+                  context,
+                  Routes.cartList,
+                );
+              },
               color: Colors.teal,
               child: Center(
                 child: Text(

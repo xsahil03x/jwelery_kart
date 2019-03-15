@@ -15,11 +15,15 @@ class CarouselProductImages extends StatelessWidget {
       viewportFraction: 1.0,
       items: product.productImageURLs.map((image) {
         return Container(
-          child: CachedNetworkImage(
-            imageUrl: image,
-            fit: BoxFit.cover,
-            height: (MediaQuery.of(context).size.height * 2) / 3,
-          ),
+          child: image.isNotEmpty
+              ? CachedNetworkImage(
+                  imageUrl: image,
+                  fit: BoxFit.cover,
+                  height: (MediaQuery.of(context).size.height * 2) / 3,
+                )
+              : Center(
+                  child: Text('Error no image'),
+                ),
         );
       }).toList(),
       autoPlay: false,

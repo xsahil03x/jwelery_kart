@@ -3,6 +3,7 @@ import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/jwelery_kart_bloc.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
+import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 import 'package:jwelery_kart/pages/fragments/men/men_screen.dart';
 import 'package:jwelery_kart/pages/fragments/women/women_screen.dart';
 import 'package:jwelery_kart/pages/home/cart_item_counter.dart';
@@ -33,6 +34,8 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    // TODO : Remove this hardcoded when registration is bug free
+    prefsHelper.userPhone = '+917987036365';
     _tabController = new TabController(
       length: 2,
       vsync: this,
@@ -85,7 +88,7 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
                 child: Image.asset('assets/images/ic_food.png'),
               ),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: const Color.fromARGB(255, 238, 247, 250),
               ),
             ),
             InkWell(
@@ -134,13 +137,13 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
                 leading: Icon(Icons.shopping_cart),
               ),
             ),
-            InkWell(
-              child: ListTile(
-                onTap: () {},
-                title: Text("My Account"),
-                leading: Icon(Icons.account_circle),
-              ),
-            ),
+//            InkWell(
+//              child: ListTile(
+//                onTap: () {},
+//                title: Text("My Account"),
+//                leading: Icon(Icons.account_circle),
+//              ),
+//            ),
             Divider(),
             InkWell(
               child: ListTile(

@@ -5,6 +5,7 @@ import 'package:jwelery_kart/data/models/cart_response.dart';
 import 'package:jwelery_kart/data/models/collection_response.dart';
 import 'package:jwelery_kart/data/models/customer.dart';
 import 'package:jwelery_kart/data/models/offer_product_response.dart';
+import 'package:jwelery_kart/data/models/order.dart';
 import 'package:jwelery_kart/data/models/order_response.dart';
 import 'package:jwelery_kart/data/models/paytm_model.dart';
 import 'package:jwelery_kart/data/models/product.dart';
@@ -165,11 +166,11 @@ class JeweleryKartApi {
         .then((result) => result.body);
   }
 
-  Future<String> emptyCart() async {
+  Future<String> emptyCart(String customerContact) async {
     return await _client
         .get(_rootUrl +
             'customer?task=emptyCart&customerContact=' +
-            '+918458944882')
+            customerContact)
         .then((result) => result.body);
   }
 
@@ -253,11 +254,12 @@ class JeweleryKartApi {
     String productId,
     String orderPrice,
     String paymentMode,
+    String customerContact,
   ) async {
     return await _client
         .get(_rootUrl +
             'order?task=placeOrder&customerContact=' +
-            '+918458944882' +
+            customerContact +
             '&productId=' +
             productId +
             '&orderPrice=' +
@@ -280,11 +282,21 @@ class JeweleryKartApi {
     return orders;
   }
 
-  Future<Orders> fetchIndividualOrder(String orderId) async {
+  Future<Order> fetchIndividualOrder(String orderId) async {
     return _client
         .get(_rootUrl + 'order?task=fetchIndividualOrder&orderId=' + orderId)
         .then((result) => result.body)
         .then(json.decode)
-        .then((json) => Orders.fromJson(json));
+        .then((json) => Order.fromJson(json));
+  }
+
+  Future<String> cancelOrder(String customerContact, String orderId) async {
+    return _client
+        .get(_rootUrl +
+            'order?task=cancelOrder&customerContact=' +
+            customerContact +
+            '&orderId=' +
+            orderId)
+        .then((result) => result.body);
   }
 }

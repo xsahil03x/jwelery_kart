@@ -42,10 +42,14 @@ class ItemCard extends StatelessWidget {
                             topLeft: Radius.circular(4.0),
                             topRight: Radius.circular(4.0),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl: product.productImageURL,
-                            fit: BoxFit.fitHeight,
-                          ),
+                          child: product.productImageURL.isNotEmpty
+                              ? CachedNetworkImage(
+                                  imageUrl: product.productImageURL,
+                                  fit: BoxFit.fitHeight,
+                                )
+                              : Center(
+                                  child: Text("Error no image"),
+                                ),
                         ),
                       ),
                       // Expanded(
