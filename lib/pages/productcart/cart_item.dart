@@ -4,11 +4,12 @@ import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/cart_list_bloc.dart';
 import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 import 'package:jwelery_kart/data/models/cart_response.dart';
+import 'package:jwelery_kart/utils/app_utils.dart';
 
 class CartItem extends StatelessWidget {
   final Cart cart;
 
-  const CartItem(this.cart);
+  CartItem(this.cart);
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +91,7 @@ class CartItem extends StatelessWidget {
                     flex: 1,
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: CachedNetworkImage(
-                        imageUrl: cart.productImageURL,
-                        fit: BoxFit.fitHeight,
-                        height: 150.0,
-                      ),
+                      child: AppUtils.displayNetworkImage(cart.productImageURL),
                     ),
                   ),
                 ],
@@ -107,13 +104,19 @@ class CartItem extends StatelessWidget {
               child: FlatButton(
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(0.0)),
-                onPressed: () {
-                  cartListBloc.removeItemFromCart(
-                      prefsHelper.userPhone, cart.productId.toString());
-                  cartListBloc.removeItemResult.listen((result) {
-                    if (result == 'Success') {
+                onPressed: () async {
+                  cartListBloc
+                      .removeItemFromCart(
+                          prefsHelper.userPhone, cart.productId.toString())
+                      .then((response) {
+                    if (response == 'Success') {
+                      Scaffold.of(context).showSnackBar(new SnackBar(
+                          content: new Text('Successfuly Deleted')));
                       cartListBloc.fetchCartResponse();
-                    } else {}
+                    } else {
+                      Scaffold.of(context).showSnackBar(new SnackBar(
+                          content: new Text('Some error occured...')));
+                    }
                   });
                 },
                 child: Center(

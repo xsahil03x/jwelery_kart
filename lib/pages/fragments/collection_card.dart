@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/models/collection_response.dart';
+import 'package:jwelery_kart/utils/app_utils.dart';
 
 class CollectionCard extends StatelessWidget {
   final Collection collection;
@@ -34,7 +35,7 @@ class CollectionCard extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Expanded(
                         child: ClipRRect(
@@ -42,10 +43,8 @@ class CollectionCard extends StatelessWidget {
                             topLeft: Radius.circular(4.0),
                             topRight: Radius.circular(4.0),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl: collection.collectionImageURL,
-                            fit: BoxFit.fitHeight,
-                          ),
+                          child: AppUtils.displayNetworkImage(
+                              collection.collectionImageURL),
                         ),
                       ),
                       // Expanded(

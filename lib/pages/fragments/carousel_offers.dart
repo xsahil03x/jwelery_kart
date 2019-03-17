@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/data/models/offer_product_response.dart';
+import 'package:jwelery_kart/utils/app_utils.dart';
 
 class CarouselOffers extends StatelessWidget {
   final List<OfferBrief> carouselOffers;
@@ -18,11 +19,7 @@ class CarouselOffers extends StatelessWidget {
           margin: EdgeInsets.all(5.0),
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: CachedNetworkImage(
-              imageUrl: offer,
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width,
-            ),
+            child: AppUtils.displayNetworkImage(offer),
           ),
         );
       }).toList(),

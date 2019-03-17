@@ -1,13 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/models/product_response.dart';
+import 'package:jwelery_kart/utils/app_utils.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductBrief product;
 
-  const ProductCard(this.product);
+  ProductCard(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +42,8 @@ class ProductCard extends StatelessWidget {
                             topLeft: Radius.circular(4.0),
                             topRight: Radius.circular(4.0),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                product.productImageURL,
-                            fit: BoxFit.cover,
-                          ),
+                          child: AppUtils.displayNetworkImage(
+                              product.productImageURL),
                         ),
                       ),
                       // Expanded(

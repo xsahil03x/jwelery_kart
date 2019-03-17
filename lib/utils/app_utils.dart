@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/data/models/cart_response.dart';
 
@@ -14,6 +15,28 @@ class AppUtils {
         '-1|');
 
     return productId;
+  }
+
+  static Widget displayNetworkImage(String url) {
+    return url.isNotEmpty
+        ? CachedNetworkImage(
+            imageUrl: url,
+            errorWidget: (context, url, error) => Image.asset(
+                  'assets/images/ic_error_placeholder.png',
+                  fit: BoxFit.cover,
+                  height: double.infinity,
+                  width: double.infinity,
+                ),
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+          )
+        : Image.asset(
+            'assets/images/ic_error_placeholder.png',
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+          );
   }
 
   static Color getStatusColor(String orderStatus) {

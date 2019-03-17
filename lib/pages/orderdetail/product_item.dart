@@ -4,7 +4,7 @@ import 'package:jwelery_kart/data/models/order.dart';
 class ProductItem extends StatelessWidget {
   final Products product;
 
-  const ProductItem(this.product);
+  ProductItem(this.product);
 
   @override
   Widget build(BuildContext context) {
