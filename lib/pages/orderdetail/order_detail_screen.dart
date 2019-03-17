@@ -35,14 +35,30 @@ class RootApp extends StatelessWidget {
         child: RaisedButton(
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(0.0)),
-          onPressed: () async {
-            var response =
-                await orderDetailBloc.cancelOrder(prefsHelper.userPhone);
-            if (response != 'Fail') {
-              orderDetailBloc.fetchOrderDetails();
-            } else {
-              print('NO');
-            }
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                      title: Text(
+                        'Are you sure, you want to cancel ?',
+                        style: TextStyle(),
+                      ),
+                      actions: <Widget>[
+                        RaisedButton(
+                            textColor: Colors.white,
+                            child: Text('Yes'),
+                            onPressed: () async {
+                              var response = await orderDetailBloc
+                                  .cancelOrder(prefsHelper.userPhone);
+                              if (response != 'Fail') {
+                                Navigator.pop(context);
+                                orderDetailBloc.fetchOrderDetails();
+                              } else {
+                                print('NO');
+                              }
+                            })
+                      ],
+                    ));
           },
           color: Colors.red,
           child: Center(
