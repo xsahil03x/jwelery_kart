@@ -6,6 +6,7 @@ class ProductResponse {
   }
 
   List<ProductBrief> get productBrief => _productBrief;
+
   set productBrief(List<ProductBrief> productBrief) =>
       _productBrief = productBrief;
 
@@ -32,17 +33,21 @@ class ProductBrief {
   String _productName;
   String _productDescription;
   String _productPrice;
+  String _productBasePrice;
   String _productImageURL;
 
-  ProductBrief({int productId,
-    String productName,
-    String productDescription,
-    String productPrice,
-    String productImageURL}) {
+  ProductBrief(
+      {int productId,
+      String productName,
+      String productDescription,
+      String productPrice,
+      String productBasePrice,
+      String productImageURL}) {
     this._productId = productId;
     this._productName = productName;
     this._productDescription = productDescription;
     this._productPrice = productPrice;
+    this._productBasePrice = productBasePrice;
     this._productImageURL = productImageURL;
   }
 
@@ -63,6 +68,11 @@ class ProductBrief {
 
   set productPrice(String productPrice) => _productPrice = productPrice;
 
+  String get productBasePrice => _productBasePrice;
+
+  set productBasePrice(String productBasePrice) =>
+      _productBasePrice = productBasePrice;
+
   String get productImageURL => _productImageURL;
 
   set productImageURL(String productImageURL) =>
@@ -73,6 +83,7 @@ class ProductBrief {
     _productName = json['productName'];
     _productDescription = json['productDescription'];
     _productPrice = json['productPrice'];
+    _productBasePrice = json['productBasePrice'];
     _productImageURL = json['productImageURL'];
   }
 
@@ -82,6 +93,7 @@ class ProductBrief {
     data['productName'] = this._productName;
     data['productDescription'] = this._productDescription;
     data['productPrice'] = this._productPrice;
+    data['productBasePrice'] = this._productBasePrice;
     data['productImageURL'] = this._productImageURL;
     return data;
   }

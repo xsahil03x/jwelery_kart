@@ -11,9 +11,6 @@ class ProductDetailBloc extends BaseBloc {
   String productSize;
 
   BehaviorSubject<Product> _product = BehaviorSubject<Product>();
-  BehaviorSubject<String> _addItemResult = BehaviorSubject<String>();
-
-  Stream<String> get addItemResult => _addItemResult.stream;
 
   Stream<Product> get product => _product.stream;
 
@@ -24,19 +21,20 @@ class ProductDetailBloc extends BaseBloc {
     );
   }
 
-  void addItemToCart(String customerContact) {
-    _addItemResult.sink.addStream(
-      Observable.fromFuture(apiHelper.addItemToCart(
-        _product.value,
-        customerContact,
-        productSize,
-      )).asBroadcastStream(),
+  Future<String> addItemToCart(String customerContact) async {
+    return await apiHelper.addItemToCart(
+      _product.value,
+      customerContact,
+      productSize,
     );
+  }
+
+  bool isProductSizeSelected() {
+    return productSize == null ? false : true;
   }
 
   @override
   void dispose() {
     _product?.close();
-    _addItemResult?.close();
   }
 }

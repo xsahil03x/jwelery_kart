@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/product_detail_bloc.dart';
-import 'package:jwelery_kart/config/application.dart';
-import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/models/product.dart';
 import 'package:jwelery_kart/pages/home/cart_item_counter.dart';
 import 'package:jwelery_kart/pages/productdetail/carousel_product_images.dart';
