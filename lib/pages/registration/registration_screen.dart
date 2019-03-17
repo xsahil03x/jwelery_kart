@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -36,29 +38,44 @@ class RegistrationScreenState extends State<RegistrationScreen> {
     return new Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.grey[100],
-      body: Center(
-        child: Theme(
-          data: Theme.of(context).copyWith(
-            primaryColor: Colors.blueAccent,
-          ),
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 48.0),
-            child: new Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+      body: Theme(
+        data: Theme.of(context).copyWith(
+          primaryColor: Colors.blueAccent,
+        ),
+        child: Stack(
+          children: <Widget>[
+            Image.asset('assets/images/ic_background.jpeg',
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity),
+//              BackdropFilter(
+//                filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+//                child: Container(
+//                  decoration:
+//                      BoxDecoration(color: Colors.white.withOpacity(0.0)),
+//                ),
+//              ),
+            Center(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 48.0),
+                child: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
 //                Image.asset(
 //                  'assets/images/logo.png',
 //                  height: 90.0,
 //                ),
-                new SizedBox(
-                  height: 48.0,
+                    new SizedBox(
+                      height: 48.0,
+                    ),
+                    (!showNumberPage ? numberPage() : otpPage()),
+                  ],
                 ),
-                (!showNumberPage ? numberPage() : otpPage()),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -152,6 +169,8 @@ class RegistrationScreenState extends State<RegistrationScreen> {
           keyboardType: TextInputType.phone,
           style: new TextStyle(color: Colors.black87, fontSize: 18.0),
           decoration: new InputDecoration(
+              fillColor: Colors.grey[300],
+              filled: true,
               border: OutlineInputBorder(),
               contentPadding: const EdgeInsets.all(2.0),
               prefixIcon: Padding(
@@ -239,6 +258,8 @@ class RegistrationScreenState extends State<RegistrationScreen> {
             keyboardType: TextInputType.phone,
             style: new TextStyle(color: Colors.black87, fontSize: 18.0),
             decoration: new InputDecoration(
+                fillColor: Colors.grey[300],
+                filled: true,
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(2.0),
                 prefixIcon: Padding(

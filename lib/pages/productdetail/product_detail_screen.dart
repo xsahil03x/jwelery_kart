@@ -64,7 +64,6 @@ class RootApp extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 24.0,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.blueGrey[700],
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -88,7 +87,7 @@ class RootApp extends StatelessWidget {
                                   Text(
                                     '₹ ${snapshot.data.productBasePrice}',
                                     style: TextStyle(
-                                      fontSize: 20.0,
+                                      fontSize: 18.0,
                                       color: Colors.red,
                                       decoration: TextDecoration.lineThrough,
                                       fontWeight: FontWeight.w300,
@@ -107,7 +106,6 @@ class RootApp extends StatelessWidget {
                                 "(Inclusive of all Taxes)",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w300,
-                                  color: Colors.blueGrey[700],
                                 ),
                               )
                             ],
@@ -131,7 +129,6 @@ class RootApp extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 24.0,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.blueGrey[700],
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
