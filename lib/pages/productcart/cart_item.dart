@@ -110,12 +110,16 @@ class CartItem extends StatelessWidget {
                           prefsHelper.userPhone, cart.productId.toString())
                       .then((response) {
                     if (response == 'Success') {
-                      Scaffold.of(context).showSnackBar(new SnackBar(
-                          content: new Text('Successfuly Deleted')));
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text('Successfuly Deleted'),
+                        duration: Duration(seconds: 2),
+                      ));
                       cartListBloc.fetchCartResponse();
                     } else {
-                      Scaffold.of(context).showSnackBar(new SnackBar(
-                          content: new Text('Some error occured...')));
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text('Some error occured...'),
+                        duration: Duration(seconds: 2),
+                      ));
                     }
                   });
                 },

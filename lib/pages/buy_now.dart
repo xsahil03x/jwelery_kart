@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/buy_now_bloc.dart';
+import 'package:jwelery_kart/config/application.dart';
+import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
+import 'package:jwelery_kart/utils/dialog_utils.dart';
 import 'package:jwelery_kart/utils/snackbar_utils.dart';
 
 class BuyNow extends StatelessWidget {
@@ -42,21 +45,35 @@ class _RootAppState extends State<RootApp> {
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(0.0)),
           onPressed: () async {
+            DialogUtils.showProgressBar(context, "Order in progress");
             var response = await buyNowBloc.placeOrder(prefsHelper.userPhone);
             if (response != 'Fail') {
               if (buyNowBloc.mode == PaymentMode.Cod) {
                 print("Order Successfully Placed");
-                SnackbarUtils.show(_scaffoldKey, "Order Successfully Placed");
                 var response =
                     await buyNowBloc.emptyCart(prefsHelper.userPhone);
-                response != 'Fail'
-                    ? print('Cart Is Empty')
-                    : print("Oops some error");
+                if (response != 'Fail') {
+                  Navigator.pop(context);
+                  print('Cart is Empty');
+                  Application.router.navigateTo(
+                    context,
+                    Routes.orderSuccess,
+                  );
+                } else {
+                  Navigator.pop(context);
+                  print('Cart Empty Unsuccessful');
+                }
               } else {
+                Navigator.pop(context);
+                SnackbarUtils.show(
+                    _scaffoldKey, "Online payment is not yet implemented...");
                 print("Online payment is not yet implemented");
               }
-            } else
+            } else {
+              Navigator.pop(context);
+              SnackbarUtils.show(_scaffoldKey, "Something went wrong...");
               print(response);
+            }
           },
           color: Colors.teal,
           child: Center(

@@ -56,8 +56,10 @@ flutter:
     - assets/images/ic_food.png
     - assets/images/ic_movie.png
     - assets/images/ic_travel.png
+    - assets/images/ic_success.png
     - assets/images/ic_error_placeholder.png
     - assets/images/ic_background.jpeg
+    - assets/images/ic_drawer_header.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

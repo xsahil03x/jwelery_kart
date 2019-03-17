@@ -1,6 +1,7 @@
-import 'package:jwelery_kart/pages/buynow/buy_now.dart';
+import 'package:jwelery_kart/pages/buy_now.dart';
 import 'package:jwelery_kart/pages/home/home_screen.dart';
 import 'package:jwelery_kart/pages/myorders/my_orders_screen.dart';
+import 'package:jwelery_kart/pages/order_successful.dart';
 import 'package:jwelery_kart/pages/orderdetail/order_detail_screen.dart';
 import 'package:jwelery_kart/pages/productcart/product_cart_screen.dart';
 import 'package:jwelery_kart/pages/productdetail/product_detail_screen.dart';
@@ -67,4 +68,9 @@ var orderDetailHandler = new Handler(
   return new OrderDetailScreen(
     orderId: orderId,
   );
+});
+
+var orderSuccessHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return new OrderSuccessfulScreen();
 });

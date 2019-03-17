@@ -52,7 +52,7 @@ class CustomBottomNav extends StatelessWidget {
                   borderRadius: new BorderRadius.circular(0.0)),
               onPressed: () {
                 cartListBloc.cartResponse.listen((result) {
-                  if (result != null) {
+                  if (result.totalPrice != 0) {
                     Application.router.navigateTo(
                         context,
                         Routes.buyNow +
@@ -60,6 +60,11 @@ class CustomBottomNav extends StatelessWidget {
                             AppUtils.generateProductId(result.cart) +
                             '&orderPrice=' +
                             result.totalPrice.toString());
+                  } else {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text('Cart is empty...'),
+                      duration: Duration(seconds: 2),
+                    ));
                   }
                 });
               },

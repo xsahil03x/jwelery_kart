@@ -82,11 +82,10 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
           padding: EdgeInsets.all(0.0),
           children: <Widget>[
             DrawerHeader(
-              child: Center(
-                child: Image.asset('assets/images/ic_food.png'),
-              ),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 238, 247, 250),
+              padding: EdgeInsets.all(0.0),
+              child: Image.asset(
+                'assets/images/ic_drawer_header.jpeg',
+                fit: BoxFit.cover,
               ),
             ),
             InkWell(
