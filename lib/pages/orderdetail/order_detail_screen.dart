@@ -54,7 +54,11 @@ class RootApp extends StatelessWidget {
                                 Navigator.pop(context);
                                 orderDetailBloc.fetchOrderDetails();
                               } else {
-                                print('NO');
+                                Navigator.pop(context);
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text('Something went wrong'),
+                                  duration: Duration(seconds: 1),
+                                ));
                               }
                             })
                       ],

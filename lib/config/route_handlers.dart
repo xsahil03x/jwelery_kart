@@ -1,4 +1,5 @@
 import 'package:jwelery_kart/pages/buy_now.dart';
+import 'package:jwelery_kart/pages/contact_us.dart';
 import 'package:jwelery_kart/pages/home/home_screen.dart';
 import 'package:jwelery_kart/pages/myorders/my_orders_screen.dart';
 import 'package:jwelery_kart/pages/order_successful.dart';
@@ -10,6 +11,7 @@ import 'package:jwelery_kart/pages/productlist/product_list_screen.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/pages/registration/user_info_screen.dart';
+import 'package:jwelery_kart/pages/terms_and_condition.dart';
 
 var rootHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -73,4 +75,14 @@ var orderDetailHandler = new Handler(
 var orderSuccessHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return new OrderSuccessfulScreen();
+});
+
+var contactUsHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return new ContactUsScreen();
+});
+
+var termsAndConditionHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return new TermsAndConditionScreen();
 });
