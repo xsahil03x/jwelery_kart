@@ -10,11 +10,8 @@ class CartListBloc extends BaseBloc {
 
   BehaviorSubject<String> _totalPrice = BehaviorSubject<String>();
   BehaviorSubject<CartResponse> _cartResponse = BehaviorSubject<CartResponse>();
-  BehaviorSubject<String> _removeItemResult = BehaviorSubject<String>();
 
   Stream<CartResponse> get cartResponse => _cartResponse.stream;
-
-  Stream<String> get removeItemResult => _removeItemResult.stream;
 
   Stream<String> get totalPrice => _totalPrice.stream;
 
@@ -29,18 +26,14 @@ class CartListBloc extends BaseBloc {
     );
   }
 
-  removeItemFromCart(String customerContact, String productId) {
-    _removeItemResult.sink.addStream(
-      Observable.fromFuture(
-              apiHelper.removeItemFromCart(customerContact, productId))
-          .asBroadcastStream(),
-    );
+  Future<String> removeItemFromCart(
+      String customerContact, String productId) async {
+    return await apiHelper.removeItemFromCart(customerContact, productId);
   }
 
   @override
   void dispose() {
     _totalPrice?.close();
     _cartResponse?.close();
-    _removeItemResult?.close();
   }
 }
