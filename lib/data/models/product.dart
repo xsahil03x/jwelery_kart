@@ -3,6 +3,7 @@ class Product {
   String productName;
   String productDescription;
   String productPrice;
+  String productBasePrice;
   int collectionId;
   List<String> productImageURLs;
   List<String> productSize;
@@ -16,6 +17,7 @@ class Product {
       this.productName,
       this.productDescription,
       this.productPrice,
+      this.productBasePrice,
       this.collectionId,
       this.productImageURLs,
       this.productSize,
@@ -29,6 +31,7 @@ class Product {
     productName = json['productName'];
     productDescription = json['productDescription'];
     productPrice = json['productPrice'];
+    productBasePrice = json['productBasePrice'];
     collectionId = json['collectionId'];
     productImageURLs = json['productImageURLs'].cast<String>();
     productSize = json['productSize'].cast<String>();
@@ -44,6 +47,7 @@ class Product {
     data['productName'] = this.productName;
     data['productDescription'] = this.productDescription;
     data['productPrice'] = this.productPrice;
+    data['productBasePrice'] = this.productPrice;
     data['collectionId'] = this.collectionId;
     data['productImageURLs'] = this.productImageURLs;
     data['productSize'] = this.productSize;

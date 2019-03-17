@@ -8,6 +8,7 @@ import 'package:jwelery_kart/pages/productdetail/custom_bottom_nav.dart';
 import 'package:jwelery_kart/utils/dialog_utils.dart';
 import 'package:jwelery_kart/pages/productdetail/shopping_action_widget.dart';
 import 'package:jwelery_kart/widgets/description_text_widget.dart';
+import 'package:jwelery_kart/widgets/discount_widget.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final String productId;
@@ -71,13 +72,35 @@ class RootApp extends StatelessWidget {
                               SizedBox(
                                 height: 5.0,
                               ),
-                              Text(
-                                "₹" + snapshot.data.productPrice,
-                                style: TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.teal,
-                                ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Text(
+                                    '₹ ${snapshot.data.productPrice}',
+                                    style: TextStyle(
+                                      fontSize: 24.0,
+                                      color: Colors.teal,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    maxLines: 1,
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  Text(
+                                    '₹ ${snapshot.data.productBasePrice}',
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      color: Colors.red,
+                                      decoration: TextDecoration.lineThrough,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                    maxLines: 1,
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  DiscountWidget(
+                                      productBasePrice:
+                                          snapshot.data.productBasePrice,
+                                      productPrice: snapshot.data.productPrice)
+                                ],
                               ),
                               SizedBox(height: 2.0),
                               Text(
