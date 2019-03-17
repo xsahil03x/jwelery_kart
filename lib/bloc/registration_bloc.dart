@@ -22,7 +22,7 @@ class RegistrationBloc extends BaseBloc {
     emailController = new TextEditingController();
   }
 
-  void onSubmit() async {
+  Future<String> onSubmit() async {
     if (formKey.currentState.validate()) {
       final customer = Customer.fresh(
           customerName: nameController.text,
@@ -32,12 +32,9 @@ class RegistrationBloc extends BaseBloc {
           customerPincode: zipController.text,
           customerEmail: emailController.text);
 
-      var response = await apiHelper.registerCustomer(customer);
-      if (response == 'Success')
-        print("Yes");
-      else
-        print("NO");
+      return await apiHelper.registerCustomer(customer);
     }
+    return 'Invalid Form';
   }
 
   @override

@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color.fromARGB(255, 238, 247, 250),
         ),
         onGenerateRoute: Application.router.generator,
-        home: HomeScreen(),
-//        home: prefsHelper.isLogin ? HomeScreen() : RegistrationScreen(),
+        home: prefsHelper.isLogin ? HomeScreen() : RegistrationScreen(),
       ),
     );
   }

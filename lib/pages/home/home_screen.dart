@@ -34,8 +34,6 @@ class _RootAppState extends State<RootApp> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    // TODO : Remove this hardcoded when registration is bug free
-    prefsHelper.userPhone = '+917987036365';
     _tabController = new TabController(
       length: 2,
       vsync: this,

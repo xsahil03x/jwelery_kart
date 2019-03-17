@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jwelery_kart/bloc/base_provider.dart';
 import 'package:jwelery_kart/bloc/registration_bloc.dart';
+import 'package:jwelery_kart/config/application.dart';
+import 'package:jwelery_kart/config/routes.dart';
 import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
+import 'package:jwelery_kart/utils/dialog_utils.dart';
+import 'package:jwelery_kart/utils/snackbar_utils.dart';
 
 class UserInfoScreen extends StatelessWidget {
   @override
@@ -15,10 +19,13 @@ class UserInfoScreen extends StatelessWidget {
 }
 
 class UserDetailForm extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final registrationBloc = Provider.of<RegistrationBloc>(context);
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Enter Details"),
       ),
@@ -138,10 +145,31 @@ class UserDetailForm extends StatelessWidget {
                       ),
                     ),
                     textColor: Colors.white.withOpacity(0.9),
-                    onPressed: () {
-                      registrationBloc.onSubmit();
-//                        Scaffold.of(context).showSnackBar(
-//                            SnackBar(content: Text('Processing Data')));
+                    onPressed: () async {
+                      DialogUtils.showProgressBar(
+                          context, "Registering User...");
+                      var response = await registrationBloc.onSubmit();
+                      if (response == 'Success') {
+                        Navigator.pop(context);
+                        await Future.delayed(
+                          Duration(milliseconds: 200),
+                        );
+                        SnackbarUtils.show(
+                            _scaffoldKey, 'Successfully Registered');
+                        await Future.delayed(
+                          Duration(milliseconds: 700),
+                        );
+                        prefsHelper.isLogin = true;
+
+                        Application.router.navigateTo(context, Routes.main);
+                      } else if (response == 'Fail') {
+                        Navigator.pop(context);
+                        SnackbarUtils.show(
+                            _scaffoldKey, 'Something went wrong...');
+                      } else {
+                        Navigator.pop(context);
+                        SnackbarUtils.show(_scaffoldKey, 'Invalid Data...');
+                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

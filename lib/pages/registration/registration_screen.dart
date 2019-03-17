@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:jwelery_kart/config/application.dart';
 import 'package:jwelery_kart/config/routes.dart';
+import 'package:jwelery_kart/data/remote/jwelery_kart_api.dart';
 import 'package:jwelery_kart/utils/dialog_utils.dart';
 import 'package:jwelery_kart/data/local/sharedpreference_helper.dart';
 import 'package:jwelery_kart/utils/snackbar_utils.dart';
@@ -64,7 +66,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
 
     final PhoneVerificationCompleted verificationCompleted =
         (FirebaseUser user) {
-//      saveAndNavigate(user);
+      saveAndNavigate(user);
     };
 
     final PhoneVerificationFailed verificationFailed =
@@ -109,19 +111,17 @@ class RegistrationScreenState extends State<RegistrationScreen> {
       verificationId: verificationId,
       smsCode: otp,
     );
-    final FirebaseUser user = await _auth.signInWithCredential(credential);
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
-    prefsHelper.userPhone = user.phoneNumber;
-    Navigator.pop(context);
-    await Future.delayed(
-      Duration(milliseconds: 200),
-    );
-    SnackbarUtils.show(_scaffoldKey, "Verification Successfull");
-    await Future.delayed(
-      Duration(milliseconds: 700),
-    );
-    Application.router.navigateTo(context, Routes.userDetail);
+    await _auth.signInWithCredential(credential).then((user) {
+      saveAndNavigate(user);
+    }).catchError((error) {
+      if (error is PlatformException) {
+        Navigator.pop(context);
+        SnackbarUtils.show(_scaffoldKey, 'Invalid OTP please try again');
+        setState(() {
+          showNumberPage = false;
+        });
+      }
+    });
   }
 
   Widget numberPage() {
@@ -281,32 +281,23 @@ class RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-//  void saveAndNavigate(FirebaseUser user) async {
-//    prefsHelper.isLogin = user ?? true;
-//    Navigator.pop(context);
-//    await Future.delayed(
-//      Duration(milliseconds: 200),
-//    );
-//    SnackbarUtils.show(_scaffoldKey,
-//        user != null ? "Login Successful" : "Login Failed... Try Again");
-//    await Future.delayed(
-//      Duration(milliseconds: 700),
-//    );
-//    user != null
-//        ? Application.router.navigateTo(context, Routes.main)
-//        : setState(() {
-//            showNumberPage = true;
-//          });
-//
-////    prefsHelper.isLogin = true;
-////    Navigator.pop(context);
-////    await Future.delayed(
-////      Duration(milliseconds: 200),
-////    );
-////    SnackbarUtils.show(_scaffoldKey, "Login Successful");
-////    await Future.delayed(
-////      Duration(milliseconds: 700),
-////    );
-////    Application.router.navigateTo(context, Routes.main);
-//  }
+  void saveAndNavigate(FirebaseUser user) async {
+    Navigator.pop(context);
+    await Future.delayed(
+      Duration(milliseconds: 200),
+    );
+    SnackbarUtils.show(_scaffoldKey,
+        user != null ? "Login Successful" : "Login Failed... Try Again");
+    await Future.delayed(
+      Duration(milliseconds: 700),
+    );
+    await apiHelper.fetchCustomer(user.phoneNumber).then((customer) {
+      if (customer != null && user != null) {
+        prefsHelper.isLogin = true;
+        prefsHelper.userPhone = user.phoneNumber;
+        Application.router.navigateTo(context, Routes.main);
+      } else
+        Application.router.navigateTo(context, Routes.userDetail);
+    });
+  }
 }
